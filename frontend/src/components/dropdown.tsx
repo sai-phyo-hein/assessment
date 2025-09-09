@@ -145,12 +145,10 @@ const Dropdown: React.FC<DropdownProps> = ({
         ref={triggerRef}
         type="button"
         onClick={handleToggle}
-        className={`text-left bg-transparent border-none outline-none focus:outline-none cursor-pointer fw-medium ${scrolled ? 'text-white' : 'text-dark'} ${className}`}
-        style={{
-          ...style,
-          color: scrolled ? 'white !important' : '#0f5132',
-          transition: 'color 0.3s ease',
-        }}
+        className={`text-left bg-transparent border-none outline-none focus:outline-none cursor-pointer font-medium transition-colors duration-300 ${
+          scrolled ? 'text-white' : 'text-flex-green'
+        } ${className || ''}`}
+        style={style}
         aria-expanded={isOpen}
         aria-haspopup="listbox"
       >
@@ -163,9 +161,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           <div
             ref={dropdownRef}
             role="listbox"
-            className={`fixed bg-white shadow-lg rounded-md border border-gray-200 p-1 ${
-              dropdownPosition.showAbove ? 'rounded-2-above' : 'rounded-2'
-            }`}
+            className="fixed bg-white shadow-lg rounded-md border border-gray-200 p-1 overflow-hidden"
             style={{
               position: 'fixed',
               top: `${dropdownPosition.top}px`,
@@ -202,33 +198,13 @@ const Dropdown: React.FC<DropdownProps> = ({
                   role="option"
                   aria-selected={option.value === value}
                   onClick={() => handleOptionClick(option.value)}
-                  className={`w-full text-left px-4 py-3 border-none outline-none cursor-pointer whitespace-nowrap transition-colors text-base fw-medium ${
+                  className={`w-full text-left px-4 py-3 border-none outline-none cursor-pointer whitespace-nowrap transition-colors text-base font-medium min-h-[48px] ${
                     isFirst ? 'rounded-t-md' : ''
-                  } ${isLast ? 'rounded-b-md' : ''}`}
-                  style={{
-                    display: 'block',
-                    boxSizing: 'border-box',
-                    margin: 0,
-                    padding: '12px 16px',
-                    fontSize: '16px',
-                    minHeight: '48px',
-                    backgroundColor:
-                      option.value === value ? '#0f5132' : 'white',
-                    color: option.value === value ? 'white' : '#333',
-                  }}
-                  onMouseEnter={(e) => {
-                    if (option.value !== value) {
-                      e.currentTarget.style.backgroundColor =
-                        'rgba(15, 81, 50, 0.1)';
-                      e.currentTarget.style.border = 'none';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (option.value !== value) {
-                      e.currentTarget.style.backgroundColor = 'white';
-                      e.currentTarget.style.border = 'none';
-                    }
-                  }}
+                  } ${isLast ? 'rounded-b-md' : ''} ${
+                    option.value === value 
+                      ? 'bg-flex-green text-white' 
+                      : 'bg-white text-gray-800 hover:bg-flex-green/10'
+                  }`}
                 >
                   {option.label}
                 </button>

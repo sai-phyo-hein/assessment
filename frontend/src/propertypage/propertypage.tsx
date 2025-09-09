@@ -36,42 +36,21 @@ const PropertyPage: React.FC = () => {
   }, []);
 
   return (
-    <div style={{ width: '100%', height: '100vh' }}>
-      <div style={{ display: 'flex', width: '100%', height: '100%' }}>
-        <div
-          style={{ 
-            width: '60%', 
-            backgroundColor: '#f0f0f0', 
-            overflow: 'auto',
-            padding: '0 10px 10px 10px',
-            position: 'relative'
-          }}
-        >
-          <div style={{ 
-            position: 'sticky',
-            zIndex: 10, 
-            backgroundColor: '#f0f0f0',
-            top: '0px',
-            marginBottom: '20px'
-          }}>
+    <div className="w-full h-screen">
+      <div className="flex w-full h-full">
+        <div className="w-3/5 bg-gray-100 overflow-auto p-2.5 pb-2.5 relative">
+          <div className="sticky z-10 bg-gray-100 top-0 mb-5">
             <SearchBar />
           </div>
           {!loading && !error && (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem' }}>
+            <div className="grid grid-cols-2 gap-4">
               {properties.map((property, index) => (
                 <PropertyCard key={index} property={property} />
               ))}
             </div>
           )}
         </div>
-        <div
-          style={{ 
-            width: '40%', 
-            backgroundColor: '#e0e0e0', 
-            padding: '20px',
-            overflow: 'auto'
-          }}
-        >
+        <div className="w-2/5 bg-gray-300 p-5 overflow-auto">
           Map
         </div>
       </div>

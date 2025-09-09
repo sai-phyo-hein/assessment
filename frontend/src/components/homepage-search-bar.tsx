@@ -4,9 +4,10 @@ import Dropdown from './dropdown';
 
 interface SearchBarProps {
   style?: React.CSSProperties;
+  className?: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ style }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
   const [selectedCity, setSelectedCity] = useState('City');
   const [checkInDate, setCheckInDate] = useState('');
   const [checkOutDate, setCheckOutDate] = useState('');
@@ -33,51 +34,28 @@ const SearchBar: React.FC<SearchBarProps> = ({ style }) => {
 
   return (
     <div
-      style={{
-        backgroundColor: 'white',
-        borderRadius: '8px',
-        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-        padding: '16px',
-        maxWidth: '1200px',
-        margin: '0 auto',
-        marginTop: '0px',
-        position: 'relative',
-        zIndex: 20,
-        ...style,
-      }}
+      className={`bg-white rounded-lg shadow-xl p-4 max-w-6xl mx-auto relative z-20 ${className}`}
+      style={style}
     >
-      <div style={{ display: 'flex', alignItems: 'flex-end', gap: '16px' }}>
+      <div className="flex items-end gap-4">
         {/* City Selection */}
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <div className="flex flex-col flex-1">
           <Dropdown
             value={selectedCity}
             onChange={setSelectedCity}
             options={cities.map((city) => ({
               value: city,
               label: (
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <MapPin
-                    size={14}
-                    style={{ marginRight: '8px', color: '#6b7280' }}
-                  />
+                <div className="flex items-center">
+                  <MapPin size={14} className="mr-2 text-gray-500" />
                   {city}
                 </div>
               ),
             }))}
-            style={{
-              width: '100%',
-              padding: '12px',
-              border: '1px solid #d1d5db',
-              borderRadius: '6px',
-              outline: 'none',
-              fontSize: '14px',
-            }}
+            className="w-full p-3 border border-gray-300 rounded-md outline-none text-sm"
             defaultLabel={
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <MapPin
-                  size={14}
-                  style={{ marginRight: '8px', color: '#6b7280' }}
-                />
+              <div className="flex items-center">
+                <MapPin size={14} className="mr-2 text-gray-500" />
                 City
               </div>
             }
@@ -85,88 +63,51 @@ const SearchBar: React.FC<SearchBarProps> = ({ style }) => {
         </div>
 
         {/* Check-in Date */}
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <div className="flex flex-col flex-1">
           <input
             type="date"
             value={checkInDate}
             onChange={(e) => setCheckInDate(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '12px',
-              border: '1px solid #d1d5db',
-              borderRadius: '6px',
-              outline: 'none',
-              fontSize: '14px',
-            }}
+            className="w-full p-3 border border-gray-300 rounded-md outline-none text-sm"
             min={new Date().toISOString().split('T')[0]}
           />
         </div>
 
         {/* Check-out Date */}
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <div className="flex flex-col flex-1">
           <input
             type="date"
             value={checkOutDate}
             onChange={(e) => setCheckOutDate(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '12px',
-              border: '1px solid #d1d5db',
-              borderRadius: '6px',
-              outline: 'none',
-              fontSize: '14px',
-            }}
+            className="w-full p-3 border border-gray-300 rounded-md outline-none text-sm"
             min={checkInDate || new Date().toISOString().split('T')[0]}
           />
         </div>
 
         {/* Guest Selection */}
-        <div style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              padding: '12px',
-              border: '1px solid #d1d5db',
-              borderRadius: '6px',
-            }}
-          >
+        <div className="flex flex-col flex-1">
+          <div className="flex items-center justify-between p-3 border border-gray-300 rounded-md">
             <button
               onClick={() => handleGuestChange(false)}
-              style={{
-                width: '24px',
-                height: '24px',
-                borderRadius: '50%',
-                backgroundColor: '#f3f4f6',
-                border: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: guests <= 1 ? 'not-allowed' : 'pointer',
-                opacity: guests <= 1 ? 0.5 : 1,
-              }}
+              className={`w-6 h-6 rounded-full bg-gray-100 border-none flex items-center justify-center ${
+                guests <= 1 
+                  ? 'cursor-not-allowed opacity-50' 
+                  : 'cursor-pointer hover:bg-gray-200'
+              }`}
               disabled={guests <= 1}
             >
               <Minus size={12} />
             </button>
-            <span style={{ fontSize: '14px', fontWeight: '500' }}>
+            <span className="text-sm font-medium">
               {guests} {guests === 1 ? 'Guest' : 'Guests'}
             </span>
             <button
               onClick={() => handleGuestChange(true)}
-              style={{
-                width: '24px',
-                height: '24px',
-                borderRadius: '50%',
-                backgroundColor: '#f3f4f6',
-                border: 'none',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: guests >= 10 ? 'not-allowed' : 'pointer',
-                opacity: guests >= 10 ? 0.5 : 1,
-              }}
+              className={`w-6 h-6 rounded-full bg-gray-100 border-none flex items-center justify-center ${
+                guests >= 10 
+                  ? 'cursor-not-allowed opacity-50' 
+                  : 'cursor-pointer hover:bg-gray-200'
+              }`}
               disabled={guests >= 10}
             >
               <Plus size={12} />
@@ -175,20 +116,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ style }) => {
         </div>
 
         {/* Search Button */}
-        <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-          <button
-            style={{
-              backgroundColor: '#059669',
-              color: 'white',
-              fontWeight: '500',
-              padding: '12px 24px',
-              borderRadius: '6px',
-              border: 'none',
-              cursor: 'pointer',
-              whiteSpace: 'nowrap',
-              fontSize: '14px',
-            }}
-          >
+        <div className="flex items-end">
+          <button className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-6 py-3 rounded-md border-none cursor-pointer whitespace-nowrap text-sm transition-colors">
             Search
           </button>
         </div>

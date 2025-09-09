@@ -20,115 +20,51 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   imageUrl = "https://placehold.co/600x400"  // Default image URL
 }) => {
   return (
-    <div style={{
-      backgroundColor: 'white',
-      borderRadius: '0.5rem',
-      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-      overflow: 'hidden',
-      cursor: 'pointer',
-      transition: 'box-shadow 0.3s'
-    }}>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-lg">
       {/* Image Section */}
-      <div style={{
-        position: 'relative',
-        height: '16rem',
-        overflow: 'hidden'
-      }}>
+      <div className="relative h-64 overflow-hidden">
         <img 
           src={imageUrl} 
           alt={property.name}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            transition: 'transform 0.3s'
-          }}
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
         />
         {/* Price Badge */}
-        <div style={{
-          position: 'absolute',
-          top: '1rem',
-          right: '1rem',
-          backgroundColor: 'white',
-          borderRadius: '0.375rem',
-          padding: '0.5rem 0.75rem',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
-        }}>
-          <div style={{
-            fontSize: '1.125rem',
-            fontWeight: 'bold',
-            color: '#111827'
-          }}>£{property.per_night_price}</div>
-          <div style={{
-            fontSize: '0.875rem',
-            color: '#6B7280'
-          }}>per night</div>
+        <div className="absolute top-4 right-4 bg-white rounded-md px-3 py-2 shadow-md">
+          <div className="text-lg font-bold text-gray-900">
+            £{property.per_night_price}
+          </div>
+          <div className="text-sm text-gray-500">
+            per night
+          </div>
         </div>
       </div>
 
       {/* Content Section */}
-      <div style={{
-        padding: '1.5rem'
-      }}>
+      <div className="p-6">
         {/* Property Name */}
-        <h3 style={{
-          fontSize: '1.25rem',
-          fontWeight: '600',
-          color: '#111827',
-          marginBottom: '0.5rem'
-        }}>
+        <h3 className="text-xl font-semibold text-gray-900 mb-2">
           {property.name}
         </h3>
         
         {/* Location */}
-        <p style={{
-          color: '#6B7280',
-          marginBottom: '1rem'
-        }}>
+        <p className="text-gray-500 mb-4">
           {property.location}
         </p>
 
         {/* Property Details */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          fontSize: '0.75rem',
-          color: '#374151'
-        }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.25rem'
-          }}>
-            <Bed style={{
-              width: '1rem',
-              height: '1rem'
-            }} />
+        <div className="flex items-center gap-2 text-xs text-gray-700">
+          <div className="flex items-center gap-1">
+            <Bed className="w-4 h-4" />
             <span>{property.bedrooms} Bedroom{property.bedrooms > 1 ? 's' : ''}</span>
           </div>
           
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.25rem'
-          }}>
-            <Bath style={{
-              width: '1rem',
-              height: '1rem'
-            }} />
+          <div className="flex items-center gap-1">
+            <Bath className="w-4 h-4" />
             <span>{property.bathrooms} Bathroom{property.bathrooms > 1 ? 's' : ''}</span>
           </div>
           
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.25rem'
-          }}>
-            <Users style={{
-              width: '1rem',
-              height: '1rem'
-            }} />
+          <div className="flex items-center gap-1">
+            <Users className="w-4 h-4" />
             <span>Up to {property.max_guests} guests</span>
           </div>
         </div>

@@ -1,4 +1,3 @@
-import './App.css';
 import Navbar from './homepage/navbar';
 import Search from './homepage/search';
 import LocationGallery from './homepage/location-gallery';
@@ -9,7 +8,7 @@ function App() {
   const { showPropertyPage } = useAppStore();
 
   return (
-    <div className="App">
+    <div className="min-h-screen bg-white">
       <Navbar />
       {showPropertyPage ? (
         <PropertyPage />
@@ -19,8 +18,8 @@ function App() {
           <LocationGallery />
         </>
       )}
-      <main style={{ marginTop: '80px', padding: '2rem' }}>
-        <div className="container">
+      <main className="mt-20 p-8">
+        <div className="container mx-auto">
           {/* <h1>Welcome to Flex Living Assessment App</h1>
           <p>Your navbar should be visible at the top of the page.</p> */}
         </div>

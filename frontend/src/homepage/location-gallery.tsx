@@ -33,42 +33,16 @@ const LocationGallery: React.FC = () => {
 
   return (
     <div>
-      <h1
-        style={{
-          fontSize: '4rem',
-          color: 'black',
-          textAlign: 'center',
-          margin: '4rem 0',
-          fontWeight: 'bold',
-        }}
-      >
+      <h1 className="text-6xl text-black text-center my-16 font-bold">
         Furnished apartments in top locations
       </h1>
-      <p
-        style={{
-          fontSize: '1.35rem',
-          color: '#666',
-          textAlign: 'center',
-          maxWidth: '95%',
-          margin: '0 auto 4rem',
-          lineHeight: '1.6',
-        }}
-      >
+      <p className="text-xl text-gray-600 text-center max-w-[95%] mx-auto mb-16 leading-relaxed">
         The Flex apartments are designed with you in mind – all you have to do
         is unpack your bags and start living. With flexible terms and seamless
         service, we offer move-in ready apartments across top cities around the
         globe. Stay for days, weeks or months, and leave when it suits you.
       </p>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(2, 1fr)',
-          gap: '5rem',
-          maxWidth: '900px',
-          margin: '0 auto 6rem',
-          padding: '0 2rem',
-        }}
-      >
+      <div className="grid grid-cols-2 gap-20 max-w-4xl mx-auto mb-24 px-8">
         {locations.map((location, index) => (
           <LocationCard
             key={index}
