@@ -2,15 +2,18 @@ import Navbar from './homepage/navbar';
 import Search from './homepage/search';
 import LocationGallery from './homepage/location-gallery';
 import PropertyPage from './propertypage/propertypage';
+import PropertyDetailPage from './propertydetails/propertydetailpage';
 import { useAppStore } from './global-store';
 
 function App() {
-  const { showPropertyPage } = useAppStore();
+  const { showPropertyPage, showPropertyDetailPage } = useAppStore();
 
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      {showPropertyPage ? (
+      {showPropertyDetailPage ? (
+        <PropertyDetailPage />
+      ) : showPropertyPage ? (
         <PropertyPage />
       ) : (
         <>

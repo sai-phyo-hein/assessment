@@ -7,9 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        'flex-green': '#0f5132',
+        'flex-green': '#1C4B4B',
         'flex-green-dark': '#0a3c26',
         'flex-green-light': '#1a6844',
+        'natural': '#0f0f0eff',
+        'vanilla': '#ecebe3ff',
       },
       fontFamily: {
         'serif': ['serif'],

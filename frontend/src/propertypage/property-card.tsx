@@ -1,5 +1,6 @@
 import React from 'react';
 import { Bed, Bath, Users } from 'lucide-react';
+import { useAppStore } from '../global-store';
 
 interface Property {
   name: string;
@@ -19,8 +20,19 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   property, 
   imageUrl = "https://placehold.co/600x400"  // Default image URL
 }) => {
+  const { setShowPropertyDetailPage, setShowPropertyPage } = useAppStore();
+
+  const handleClick = () => {
+    console.log("Property Card is clicked.")
+    setShowPropertyDetailPage(true);
+    setShowPropertyPage(false);
+  };
+
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-lg">
+    <div 
+      className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-lg"
+      onClick={handleClick}
+    >
       {/* Image Section */}
       <div className="relative h-64 overflow-hidden">
         <img 

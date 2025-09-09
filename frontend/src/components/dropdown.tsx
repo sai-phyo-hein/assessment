@@ -45,10 +45,17 @@ const Dropdown: React.FC<DropdownProps> = ({
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
 
-    // Calculate horizontal position
+    // Calculate horizontal position - stick to the left edge of the button
     let leftPosition = rect.left;
+    
+    // If dropdown would go off-screen to the right, align it to the right edge of button
     if (leftPosition + dropdownWidth > viewportWidth) {
       leftPosition = rect.right - dropdownWidth;
+    }
+    
+    // Ensure dropdown doesn't go off-screen to the left
+    if (leftPosition < 0) {
+      leftPosition = 8; // Small margin from viewport edge
     }
 
     // Calculate vertical position - check if there's enough space below
@@ -56,12 +63,13 @@ const Dropdown: React.FC<DropdownProps> = ({
     const spaceAbove = rect.top;
     const showAbove = spaceBelow < dropdownHeight && spaceAbove > spaceBelow;
 
-    const topPosition = showAbove ? rect.top - dropdownHeight : rect.bottom;
+    // Position dropdown to stick directly to the button edge
+    const topPosition = showAbove ? rect.top : rect.bottom;
 
     setDropdownPosition({
       top: topPosition,
       left: leftPosition,
-      width: rect.width,
+      width: Math.max(dropdownWidth, rect.width), // Use button width if larger than dropdown
       showAbove,
     });
   };
@@ -146,7 +154,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         type="button"
         onClick={handleToggle}
         className={`text-left bg-transparent border-none outline-none focus:outline-none cursor-pointer font-medium transition-colors duration-300 ${
-          scrolled ? 'text-white' : 'text-flex-green'
+          scrolled ? 'text-white' : 'text-flex-natural'
         } ${className || ''}`}
         style={style}
         aria-expanded={isOpen}
@@ -166,7 +174,7 @@ const Dropdown: React.FC<DropdownProps> = ({
               position: 'fixed',
               top: `${dropdownPosition.top}px`,
               left: `${dropdownPosition.left}px`,
-              width: '180px',
+              width: `${dropdownPosition.width}px`,
               zIndex: 99999,
               display: 'flex',
               flexDirection: dropdownPosition.showAbove

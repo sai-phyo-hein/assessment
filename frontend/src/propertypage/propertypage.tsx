@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import SearchBar from '../components/property-search-bar';
-import PropertyCard from '../components/property-card';
+import SearchBar from './property-search-bar';
+import PropertyCard from './property-card';
 
 interface Property {
   name: string;
@@ -38,10 +38,11 @@ const PropertyPage: React.FC = () => {
   return (
     <div className="w-full h-screen">
       <div className="flex w-full h-full">
-        <div className="w-3/5 bg-gray-100 overflow-auto p-2.5 pb-2.5 relative">
-          <div className="sticky z-10 bg-gray-100 top-0 mb-5">
+        <div className="w-3/5 bg-gray-100 overflow-auto relative">
+          <div className="sticky z-10 bg-gray-100 top-0 mb-2">
             <SearchBar />
           </div>
+          <div className="p-2.5">
           {!loading && !error && (
             <div className="grid grid-cols-2 gap-4">
               {properties.map((property, index) => (
@@ -49,6 +50,7 @@ const PropertyPage: React.FC = () => {
               ))}
             </div>
           )}
+          </div>
         </div>
         <div className="w-2/5 bg-gray-300 p-5 overflow-auto">
           Map

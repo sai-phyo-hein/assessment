@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LocationCard from '../components/location-card';
+import LocationCard from './location-card';
 
 const LocationGallery: React.FC = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);

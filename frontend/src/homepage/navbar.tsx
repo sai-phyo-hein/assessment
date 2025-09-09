@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Building2, Info, BookOpen, Mail, Menu } from 'lucide-react';
+import { Building2, Info, BookOpen, Mail } from 'lucide-react';
 import Dropdown from '../components/dropdown';
 
 interface NavbarProps {}
@@ -34,7 +34,7 @@ const Navbar: React.FC<NavbarProps> = () => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 h-16 shadow-sm transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 w-full z-50 h-20 shadow-sm transition-all duration-300 ease-in-out ${
         scrolled ? 'bg-flex-green' : 'bg-white'
       }`}
     >
@@ -43,7 +43,7 @@ const Navbar: React.FC<NavbarProps> = () => {
           {/* Logo */}
           <a
             href="/"
-            className={`flex items-center text-xl font-serif font-light tracking-wide transition-colors duration-300 ${
+            className={`flex items-baseline text-xl font-serif font-light tracking-wide transition-colors duration-300 ${
               scrolled ? 'text-white' : 'text-flex-green'
             }`}
           >
@@ -56,7 +56,7 @@ const Navbar: React.FC<NavbarProps> = () => {
               alt="The Flex Logo"
               className="w-8 h-8 mr-3"
             />
-            the flex
+            the flex.
           </a>
 
           {/* Mobile menu button */}
