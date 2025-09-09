@@ -1,4 +1,3 @@
-import React from 'react';
 import './App.css';
 import Navbar from './homepage/navbar';
 import Search from './homepage/search';
