@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Users, Plus, Minus } from 'lucide-react';
+import { MapPin, Plus, Minus } from 'lucide-react';
 import Dropdown from './dropdown';
 
 interface SearchBarProps {
