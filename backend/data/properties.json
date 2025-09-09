@@ -1,0 +1,668 @@
+{
+  "properties": [
+    {
+      "name": "Spacious 1 Bed Flat in Angel",
+      "per_night_price": 185,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Charming Apartment in Belsize Park",
+      "per_night_price": 228,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Trendy 1 Bed Flat by St Katharine Docks",
+      "per_night_price": 198,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Fabulous 1 Bed Apartment with Balcony in Bow",
+      "per_night_price": 174,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Modish 1 Bed Apartment in St Katharine",
+      "per_night_price": 198,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Lovely 2 Bed Riverside Flat in Wandsworth",
+      "per_night_price": 204,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Central Flat in Spitalfields",
+      "per_night_price": 200,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Elegant 1 Bedroom Apartment in Bermondsey",
+      "per_night_price": 168,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Luxurious 2 Bed Balcony Flat in Colindale",
+      "per_night_price": 209,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Idyllic 2 Bed Balcony Flat Chelsea Harbour",
+      "per_night_price": 260,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Fancy 1 Bed Apartment in Woolwich",
+      "per_night_price": 190,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Trendy 3 Bed Apartment in Old Street",
+      "per_night_price": 352,
+      "location": "London",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "max_guests": 7
+    },
+    {
+      "name": "Modern 2 Bed Apartment in Brixton",
+      "per_night_price": 195,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Magnificent 2 Bed, 2 Bath Apartment in Bow",
+      "per_night_price": 200,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Spacious 2 Bed Apartment in Maida Vale",
+      "per_night_price": 230,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Cosy Studio in Maida Vale",
+      "per_night_price": 160,
+      "location": "London",
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "max_guests": 2
+    },
+    {
+      "name": "Modish 1 Bed Flat near Syon Park",
+      "per_night_price": 155,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Contemporary 2 Bed Balcony Flat in Holloway",
+      "per_night_price": 269,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Sophisticated 2 Bed Flat with Balcony in Acton",
+      "per_night_price": 220,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Stylish 1 Bed Apartment in Highbury with Balcony",
+      "per_night_price": 193,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Beautiful 2 Bed Apartment in Canary Wharf",
+      "per_night_price": 242,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Smashing 1 Bed Flat in Vibrant Hackney",
+      "per_night_price": 170,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Lovely 2 Bed Apartment in Peckham",
+      "per_night_price": 183,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Stylish 1 Bed Flat in Neasden",
+      "per_night_price": 150,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Sophisticated 2 Bed Apartment in Hammersmith",
+      "per_night_price": 240,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Modern Apartment in Ealing",
+      "per_night_price": 169,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Spacious 4 Bed Flat near King’s Road",
+      "per_night_price": 338,
+      "location": "London",
+      "bedrooms": 4,
+      "bathrooms": 1,
+      "max_guests": 10
+    },
+    {
+      "name": "Nice 1 Bed Flat with Balcony in Woolwich",
+      "per_night_price": 190,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Bright 1 Bed Flat on Vibrant Brick Lane",
+      "per_night_price": 200,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Impressive 2 Bed Apartment in Wapping",
+      "per_night_price": 290,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Beautiful 2 Bed Apartment in Golders Green",
+      "per_night_price": 183,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Modern 1 Bed Flat in Greenwich",
+      "per_night_price": 180,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Vast 2 Bed Balcony Flat in Highbury",
+      "per_night_price": 260,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Cosy Double Room in Acton",
+      "per_night_price": 335,
+      "location": "London",
+      "bedrooms": 5,
+      "bathrooms": 2,
+      "max_guests": 9
+    },
+    {
+      "name": "Magnificent 2 Bed Flat in Cricklewood",
+      "per_night_price": 183,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "2 Bed Flat in Shoreditch",
+      "per_night_price": 260,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Central 1 Bed Apartment in London Bridge",
+      "per_night_price": 191,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Modern Studio Flat in Kingston",
+      "per_night_price": 125,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 2
+    },
+    {
+      "name": "Elegant 2 Bed Flat near Camden Market",
+      "per_night_price": 270,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Immaculate 2 Bed Balcony Flat in Fulham",
+      "per_night_price": 260,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "1 Bed Flat near Westfield",
+      "per_night_price": 186,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Stylish 2 Bed Flat near Stratford Station",
+      "per_night_price": 178,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Luminous 2 Bed Apartment in Surrey Quays",
+      "per_night_price": 245,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "3 Bed Garden Flat in Acton",
+      "per_night_price": 347,
+      "location": "London",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "max_guests": 8
+    },
+    {
+      "name": "Spacious 2 Bed Balcony Flat in Wandsworth",
+      "per_night_price": 205,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Cosy studio Apartment near Hyde Park",
+      "per_night_price": 165,
+      "location": "London",
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "max_guests": 2
+    },
+    {
+      "name": "Spacious 2 Bed Apartment in Willesden",
+      "per_night_price": 190,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Cosy 2 Bed Flat in Golders Green",
+      "per_night_price": 160,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Contemporary 1 Bed Apartment in Central Victoria",
+      "per_night_price": 264,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Modern Studio with Balcony in Hackney",
+      "per_night_price": 155,
+      "location": "London",
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "max_guests": 2
+    },
+    {
+      "name": "Beautiful Studio Flat in Pimlico",
+      "per_night_price": 240,
+      "location": "London",
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "max_guests": 3
+    },
+    {
+      "name": "Peaceful 2 Bed Flat in Chiswick",
+      "per_night_price": 190,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Spectacular 2 Bed Flat in Acton Town",
+      "per_night_price": 210,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Central 2 Bed Flat in Camden with Garden",
+      "per_night_price": 183,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Wonderful 2 Bed Apartment in Camden",
+      "per_night_price": 270,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Studio Flat near Hyde Park",
+      "per_night_price": 140,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 2
+    },
+    {
+      "name": "Clerkenwell Flat by Whitecross Street Market",
+      "per_night_price": 200,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Gorgeous 1 Bed Apartment in Poplar",
+      "per_night_price": 174,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Comfortable 2 Bed Flat near Walthamstow Market",
+      "per_night_price": 182,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Superb 4 Bed Apartment in Wood Green",
+      "per_night_price": 236,
+      "location": "London",
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "max_guests": 9
+    },
+    {
+      "name": "Cosy Flat near Dalston Junction",
+      "per_night_price": 170,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Exceptional 2 Bed Flat near Dulwich Park",
+      "per_night_price": 190,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Beautiful Studio Apartment in Paddington",
+      "per_night_price": 120,
+      "location": "London",
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "max_guests": 2
+    },
+    {
+      "name": "Delightful 2 Bed Flat in London Bridge",
+      "per_night_price": 207,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Superb 3 Bed Apartment in Maida Vale",
+      "per_night_price": 319,
+      "location": "London",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "max_guests": 8
+    },
+    {
+      "name": "Bright Flat in Camberwell",
+      "per_night_price": 175,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Cosy 3 Bed Apartment in St John’s Wood",
+      "per_night_price": 343,
+      "location": "London",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "max_guests": 8
+    },
+    {
+      "name": "Impressive 2 Bed Penthouse in Wandsworth",
+      "per_night_price": 255,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Elegant 2 Bed Flat with Balcony in Wimbledon",
+      "per_night_price": 210,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Flat with Balcony in Bow",
+      "per_night_price": 174,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Beautiful Stylish 2 Bed Flat Clerkenwell",
+      "per_night_price": 300,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Relaxing 3 Bed Balcony Flat in Nine Elms",
+      "per_night_price": 320,
+      "location": "London",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "max_guests": 8
+    },
+    {
+      "name": "Sophisticated 5 Bed House in Clapham",
+      "per_night_price": 460,
+      "location": "London",
+      "bedrooms": 5,
+      "bathrooms": 3,
+      "max_guests": 12
+    },
+    {
+      "name": "Modern Flat in St Katharine Docks",
+      "per_night_price": 206,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Stylish 2 Bed Apartment in Lewisham",
+      "per_night_price": 210,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "1-Bed Flat in Vibrant Lambeth",
+      "per_night_price": 200,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Beautiful 2 Bed Apartment in Finsbury with Garden",
+      "per_night_price": 200,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Modern 2 Bed Flat in Holloway",
+      "per_night_price": 235,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "max_guests": 5
+    },
+    {
+      "name": "Elegant 2 Bedroom Apartment in Battersea",
+      "per_night_price": 223,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    },
+    {
+      "name": "Luxury Central Apartment in Waterloo",
+      "per_night_price": 240,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Beautiful Canal-Side Apartment in Islington",
+      "per_night_price": 170,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Cosy Pimlico Apartment",
+      "per_night_price": 240,
+      "location": "London",
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "max_guests": 4
+    },
+    {
+      "name": "Charming 2 Bed Flat in Shepherd’s Bush",
+      "per_night_price": 190,
+      "location": "London",
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "max_guests": 5
+    }
+  ]
+}
