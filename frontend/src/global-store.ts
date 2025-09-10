@@ -27,10 +27,23 @@ interface AppState {
   setPageId?: (id: string) => void;
   selectedProperty?: Property;
   setSelectedProperty?: (property: Property) => void;
+  dbSelectedProperty?: Property;
+  setDbSelectedProperty?: (property: Property | undefined) => void;
   isAuth?: boolean;
   setIsAuth?: (auth: boolean) => void;
   isManager?: boolean;
   setIsManager?: (manager: boolean) => void;
+  // Date filtering for dashboard
+  startDate?: Date | null | undefined;
+  endDate?: Date | null | undefined;
+  setDashboardDateRange?: (startDate: Date | null | undefined, endDate: Date | null | undefined) => void;
+  // Date range constraints from reviews
+  minDate?: Date | null | undefined;
+  maxDate?: Date | null | undefined;
+  setDateRangeConstraints?: (minDate: Date | null | undefined, maxDate: Date | null | undefined) => void;
+  // Dashboard view toggle
+  isSummaryView: boolean;
+  setIsSummaryView: (isSummary: boolean) => void;
 }
 
 export const useAppStore = create<AppState>((set) => ({
@@ -42,6 +55,15 @@ export const useAppStore = create<AppState>((set) => ({
     set((state) => ({ showPropertyPage: !state.showPropertyPage })),
   setPageId: (id) => set({ pageId: id }),
   setSelectedProperty: (property) => set({ selectedProperty: property }),
+  setDbSelectedProperty: (property) => set({ dbSelectedProperty: property }),
   setIsAuth: (auth) => set({ isAuth: auth }),
   setIsManager: (manager) => set({ isManager: manager }),
+  startDate: null,
+  endDate: null,
+  setDashboardDateRange: (startDate, endDate) => set({ startDate, endDate }),
+  minDate: null,
+  maxDate: null,
+  setDateRangeConstraints: (minDate, maxDate) => set({ minDate, maxDate }),
+  isSummaryView: true,
+  setIsSummaryView: (isSummary) => set({ isSummaryView: isSummary }),
 }));

@@ -1,15 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Building2, Info, BookOpen, Mail } from 'lucide-react';
-import Dropdown from '../components/dropdown';
 import SearchBar from './dashboard-search-bar';
 
 interface NavbarProps {}
 
 const Navbar: React.FC<NavbarProps> = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState('GB');
-  const [selectedCurrency, setSelectedCurrency] = useState('£ GBP');
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const API_BASE_URL =
     import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
@@ -23,15 +18,6 @@ const Navbar: React.FC<NavbarProps> = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const languages = [
-    { code: 'GB', name: 'English', flag: '🇬🇧' },
-    { code: 'FR', name: 'Français', flag: '🇫🇷' },
-    { code: 'ES', name: 'Español', flag: '🇪🇸' },
-    { code: 'DZ', name: 'العربية', flag: '🇩🇿' },
-    { code: 'CN', name: 'Chinese', flag: '🇨🇳' },
-  ];
-
-  const currencies = ['$ USD', '€ EUR', '£ GBP'];
 
   return (
     <nav
@@ -62,76 +48,7 @@ const Navbar: React.FC<NavbarProps> = () => {
 
           {/* Search Bar */}
           <div className="flex-1 mx-8">
-            <SearchBar />
-          </div>
-        </div>
-
-        {/* Mobile Navigation Menu */}
-        <div className={`lg:hidden absolute left-0 w-full transition-all duration-300 ease-in-out ${
-          mobileMenuOpen ? 'top-16 opacity-100' : 'top-14 opacity-0 pointer-events-none'
-        } ${scrolled ? 'bg-flex-green' : 'bg-white'} border-t ${
-          scrolled ? 'border-green-600' : 'border-gray-200'
-        }`}>
-          <div className="px-4 py-6 space-y-4">
-            {/* Mobile Navigation Links */}
-            <a
-              href="/landlords"
-              className={`flex items-center px-4 py-3 font-medium transition-colors duration-300 rounded-lg ${
-                scrolled ? 'text-white hover:bg-green-600' : 'text-black hover:bg-gray-100'
-              }`}
-            >
-              <Building2 size={16} className="mr-3" />
-              Landlords
-            </a>
-            <a
-              href="/about"
-              className={`flex items-center px-4 py-3 font-medium transition-colors duration-300 rounded-lg ${
-                scrolled ? 'text-white hover:bg-green-600' : 'text-black hover:bg-gray-100'
-              }`}
-            >
-              <Info size={16} className="mr-3" />
-              About us
-            </a>
-            <a
-              href="/careers"
-              className={`flex items-center px-4 py-3 font-medium transition-colors duration-300 rounded-lg ${
-                scrolled ? 'text-white hover:bg-green-600' : 'text-black hover:bg-gray-100'
-              }`}
-            >
-              <BookOpen size={16} className="mr-3" />
-              Careers
-            </a>
-            <a
-              href="/contact"
-              className={`flex items-center px-4 py-3 font-medium transition-colors duration-300 rounded-lg ${
-                scrolled ? 'text-white hover:bg-green-600' : 'text-black hover:bg-gray-100'
-              }`}
-            >
-              <Mail size={16} className="mr-3" />
-              Contact
-            </a>
-            
-            {/* Mobile Dropdowns */}
-            <div className="pt-4 border-t border-gray-300 space-y-3">
-              <Dropdown
-                value={selectedLanguage}
-                onChange={setSelectedLanguage}
-                options={languages.map((lang) => ({
-                  value: lang.code,
-                  label: `${lang.flag} ${lang.name}`,
-                }))}
-                scrolled={scrolled}
-              />
-              <Dropdown
-                value={selectedCurrency}
-                onChange={setSelectedCurrency}
-                options={currencies.map((currency) => ({
-                  value: currency,
-                  label: currency,
-                }))}
-                scrolled={scrolled}
-              />
-            </div>
+            <SearchBar scrolled={scrolled} />
           </div>
         </div>
       </div>

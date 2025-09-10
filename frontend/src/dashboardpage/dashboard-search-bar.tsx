@@ -1,296 +1,157 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { MapPin, Calendar, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { MapPin, Calendar, ChevronDown, ChevronUp } from 'lucide-react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import Dropdown from '../components/dropdown';
+import { useAppStore } from '../global-store';
+
+const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface SearchBarProps {
   style?: React.CSSProperties;
   className?: string;
+  scrolled?: boolean;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
+const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled = false }) => {
   const [selectedCity, setSelectedCity] = useState('City');
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-  const [showDatePicker, setShowDatePicker] = useState(false);
-  const [currentMonthLeft, setCurrentMonthLeft] = useState(new Date());
-  const [currentMonthRight, setCurrentMonthRight] = useState(new Date(new Date().setMonth(new Date().getMonth() + 1)));
-  const [datePickerPosition, setDatePickerPosition] = useState({ top: 0, left: 0 });
-  const datePickerRef = useRef<HTMLDivElement>(null);
-  const dateButtonRef = useRef<HTMLButtonElement>(null);
-  const [selectingCheckIn, setSelectingCheckIn] = useState(true);
+  const [isCalendarsOpen, setIsCalendarsOpen] = useState(false);
+  const { startDate, endDate, setDashboardDateRange, minDate, maxDate, setDateRangeConstraints, isSummaryView, setIsSummaryView } = useAppStore();
+  const startDatePickerRef = useRef<any>(null);
+  const endDatePickerRef = useRef<any>(null);
+  const calendarContainerRef = useRef<HTMLDivElement>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
 
-  const cities = ['London', 'Paris', 'Algiers', 'Lisbon']
-
-  const formatDateDisplay = () => {
-    if (startDate && endDate) {
-      const checkIn = startDate.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric' 
-      });
-      const checkOut = endDate.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric' 
-      });
-      return `${checkIn} - ${checkOut}`;
-    } else if (startDate) {
-      return `${startDate.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric' 
-      })} - Select end date`;
-    }
-    return 'Dates';
-  };
-
-  const navigateMonth = (direction: 'prev' | 'next', calendar: 'left' | 'right') => {
-    if (calendar === 'left') {
-      setCurrentMonthLeft(prev => {
-        const newMonth = new Date(prev);
-        newMonth.setMonth(prev.getMonth() + (direction === 'prev' ? -1 : 1));
-        return newMonth;
-      });
-    } else {
-      setCurrentMonthRight(prev => {
-        const newMonth = new Date(prev);
-        newMonth.setMonth(prev.getMonth() + (direction === 'prev' ? -1 : 1));
-        return newMonth;
-      });
-    }
-  };
-
-  const handleDateSelect = (date: Date) => {
-    if (selectingCheckIn) {
-      setStartDate(date);
-      setSelectingCheckIn(false);
-    } else {
-      if (startDate && date < startDate) {
-        setEndDate(startDate);
-        setStartDate(date);
-      } else {
-        setEndDate(date);
-      }
-      setSelectingCheckIn(true);
-      setShowDatePicker(false);
-    }
-  };
-
-  const renderCalendar = (month: Date) => {
-    const firstDay = new Date(month.getFullYear(), month.getMonth(), 1);
-    const lastDay = new Date(month.getFullYear(), month.getMonth() + 1, 0);
-    const startDate = new Date(firstDay);
-    startDate.setDate(startDate.getDate() - firstDay.getDay());
-    const endDate = new Date(lastDay);
-    endDate.setDate(endDate.getDate() + (6 - lastDay.getDay()));
-    const days = [];
-    let current = new Date(startDate);
-    while (current <= endDate) {
-      const isCurrentMonth = current.getMonth() === month.getMonth();
-      const isSelected = (selectingCheckIn && startDate && current.toDateString() === startDate.toDateString()) ||
-                        (!selectingCheckIn && endDate && current.toDateString() === endDate.toDateString());
-      const isInRange = startDate && endDate && current >= startDate && current <= endDate;
-      days.push(
-        <button
-          key={current.toISOString()}
-          onClick={() => handleDateSelect(new Date(current))}
-          className={`w-10 h-8 flex items-center justify-center text-sm rounded-lg transition-colors ${
-            !isCurrentMonth ? 'text-gray-300' :
-            isSelected ? 'bg-emerald-600 text-white' :
-            isInRange ? 'bg-emerald-100' :
-            'hover:bg-gray-100'
-          }`}
-          disabled={!isCurrentMonth}
-        >
-          {current.getDate()}
-        </button>
-      );
-      current.setDate(current.getDate() + 1);
-    }
-    return days;
-  };
+  const cities = ['London', 'Paris', 'Algiers', 'Lisbon'];
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (datePickerRef.current && !datePickerRef.current.contains(event.target as Node)) {
-        setShowDatePicker(false);
+    const fetchDateRange = async () => {
+      try {
+        const response = await fetch(`${BACKEND_URL}/reviews-date-range`);
+        if (response.ok) {
+          const data = await response.json();
+          if (data.minDate && data.maxDate) {
+            const minDateObj = new Date(data.minDate);
+            const maxDateObj = new Date(data.maxDate);
+            setDateRangeConstraints?.(minDateObj, maxDateObj);
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch date range:', error);
       }
     };
 
-    const checkPosition = () => {
-      if (dateButtonRef.current && showDatePicker) {
-        const rect = dateButtonRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        const windowWidth = window.innerWidth;
-        const datePickerHeight = 400;
-        const datePickerWidth = 768;
-        const spaceBelow = windowHeight - rect.bottom;
-        const spaceAbove = rect.top;
-        const isAbove = spaceBelow < datePickerHeight && spaceAbove > datePickerHeight;
-        let top = isAbove ? rect.top - datePickerHeight : rect.bottom;
-        if (top < 0) top = 0;
-        if (top + datePickerHeight > windowHeight) top = windowHeight - datePickerHeight;
-        let left = rect.left;
-        if (left + datePickerWidth > windowWidth) left = windowWidth - datePickerWidth;
-        if (left < 0) left = 0;
-        setDatePickerPosition({ top, left });
-      }
-    };
+    fetchDateRange();
+  }, [setDateRangeConstraints]);
 
-    if (showDatePicker) {
-      checkPosition();
-      document.addEventListener('mousedown', handleClickOutside);
-      window.addEventListener('resize', checkPosition);
-      window.addEventListener('scroll', checkPosition, true);
+  const formatDateDisplay = (date: Date | null | undefined, placeholder: string) => {
+    if (date) {
+      return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      });
     }
+    return placeholder;
+  };
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      window.removeEventListener('resize', checkPosition);
-      window.removeEventListener('scroll', checkPosition, true);
+  const handleStartDateChange = (date: Date | null) => {
+    setDashboardDateRange?.(date, endDate);
+  };
+
+  const handleEndDateChange = (date: Date | null) => {
+    setDashboardDateRange?.(startDate, date);
+  };
+
+  const toggleCalendars = () => {
+    setIsCalendarsOpen((prev) => !prev);
+  };
+
+  // Adjust calendar position to stay within viewport
+  useEffect(() => {
+    if (isCalendarsOpen && calendarContainerRef.current && toggleButtonRef.current) {
+      const adjustPosition = () => {
+        const container = calendarContainerRef.current;
+        const button = toggleButtonRef.current;
+        if (!container || !button) return;
+
+        const buttonRect = button.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        // Reset any previous positioning
+        container.style.top = '';
+        container.style.left = '';
+        container.style.transform = '';
+
+        // Check vertical space
+        const spaceBelow = viewportHeight - buttonRect.bottom;
+        const spaceAbove = buttonRect.top;
+        const containerHeight = containerRect.height;
+
+        // Check horizontal space
+        const spaceRight = viewportWidth - buttonRect.left;
+        const containerWidth = containerRect.width;
+
+        // Vertical positioning: prefer below, but flip above if not enough space
+        if (spaceBelow < containerHeight && spaceAbove > containerHeight) {
+          // Position above the button
+          container.style.top = 'auto';
+          container.style.bottom = `${buttonRect.height + 8}px`; // 8px margin
+        } else {
+          // Position below the button (default)
+          container.style.top = `${buttonRect.height + 8}px`; // 8px margin
+          container.style.bottom = 'auto';
+        }
+
+        // Horizontal positioning: adjust if overflowing right edge
+        if (spaceRight < containerWidth) {
+          // Shift left to keep within viewport
+          const offset = containerWidth - spaceRight;
+          container.style.left = `-${offset}px`;
+        } else {
+          container.style.left = '0';
+        }
+      };
+
+      adjustPosition();
+      // Re-run adjustment on window resize
+      window.addEventListener('resize', adjustPosition);
+      return () => window.removeEventListener('resize', adjustPosition);
+    }
+  }, [isCalendarsOpen]);
+
+  // Close calendars when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as Node;
+      const calendarContainer = calendarContainerRef.current;
+      const toggleButton = toggleButtonRef.current;
+
+      if (
+        calendarContainer &&
+        !calendarContainer.contains(target) &&
+        toggleButton &&
+        !toggleButton.contains(target)
+      ) {
+        setIsCalendarsOpen(false);
+      }
     };
-  }, [showDatePicker]);
 
-  const DatePickerContent = () => (
-    <div
-      ref={datePickerRef}
-      className="fixed bg-white border border-gray-300 rounded-lg shadow-2xl p-4 w-[768px] z-[10000]"
-      style={{
-        top: `${datePickerPosition.top}px`,
-        left: `${datePickerPosition.left}px`,
-        isolation: 'isolate',
-      }}
-    >
-      <div className="flex gap-4">
-        <div className="w-1/2">
-          <div className="flex items-center justify-between mb-4">
-            <button
-              onClick={() => navigateMonth('prev', 'left')}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <ChevronLeft size={16} />
-            </button>
-            <h3 className="font-medium text-gray-900">
-              {currentMonthLeft.toLocaleDateString('en-US', { 
-                month: 'long', 
-                year: 'numeric' 
-              })}
-            </h3>
-            <button
-              onClick={() => navigateMonth('next', 'left')}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <ChevronRight size={16} />
-            </button>
-          </div>
-          <div className="grid grid-cols-7 gap-1 mb-2">
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-              <div key={day} className="w-10 h-8 flex items-center justify-center text-xs font-medium text-gray-500">
-                {day}
-              </div>
-            ))}
-          </div>
-          <div className="grid grid-cols-7 gap-1">
-            {renderCalendar(currentMonthLeft)}
-          </div>
-        </div>
-
-        <div className="w-1/2">
-          <div className="flex items-center justify-between mb-4">
-            <button
-              onClick={() => navigateMonth('prev', 'right')}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <ChevronLeft size={16} />
-            </button>
-            <h3 className="font-medium text-gray-900">
-              {currentMonthRight.toLocaleDateString('en-US', { 
-                month: 'long', 
-                year: 'numeric' 
-              })}
-            </h3>
-            <button
-              onClick={() => navigateMonth('next', 'right')}
-              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-            >
-              <ChevronRight size={16} />
-            </button>
-          </div>
-          <div className="grid grid-cols-7 gap-1 mb-2">
-            {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-              <div key={day} className="w-10 h-8 flex items-center justify-center text-xs font-medium text-gray-500">
-                {day}
-              </div>
-            ))}
-          </div>
-          <div className="grid grid-cols-7 gap-1">
-            {renderCalendar(currentMonthRight)}
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-4 pt-4 border-t border-gray-200 flex justify-between items-center">
-        <div className="flex gap-4">
-          <button
-            onClick={() => {
-              setCurrentMonthLeft(prev => {
-                const newMonth = new Date(prev);
-                newMonth.setMonth(prev.getMonth() - 1);
-                return newMonth;
-              });
-              setCurrentMonthRight(prev => {
-                const newMonth = new Date(prev);
-                newMonth.setMonth(prev.getMonth() - 1);
-                return newMonth;
-              });
-            }}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <ChevronLeft size={16} />
-          </button>
-          <button
-            onClick={() => {
-              setCurrentMonthLeft(prev => {
-                const newMonth = new Date(prev);
-                newMonth.setMonth(prev.getMonth() + 1);
-                return newMonth;
-              });
-              setCurrentMonthRight(prev => {
-                const newMonth = new Date(prev);
-                newMonth.setMonth(prev.getMonth() + 1);
-                return newMonth;
-              });
-            }}
-            className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
-          >
-            <ChevronRight size={16} />
-          </button>
-        </div>
-        <div className="flex items-center gap-4 text-sm text-gray-600">
-          <span>
-            {selectingCheckIn ? 'Select start date' : 'Select end date'}
-          </span>
-          {startDate && endDate && (
-            <button
-              onClick={() => {
-                setStartDate(null);
-                setEndDate(null);
-                setSelectingCheckIn(true);
-              }}
-              className="text-emerald-600 hover:text-emerald-700"
-            >
-              Clear dates
-            </button>
-          )}
-        </div>
-      </div>
-    </div>
-  );
+    if (isCalendarsOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isCalendarsOpen]);
 
   return (
     <div
       className={`bg-transparent px-4 max-w-6xl relative z-20 ${className}`}
       style={style}
     >
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-end gap-6">
+        {/* City Dropdown */}
         <div className="flex-none w-40">
           <Dropdown
             value={selectedCity}
@@ -299,34 +160,130 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
               value: city,
               label: (
                 <div className="flex items-center">
-                  <MapPin size={14} className="mr-2 text-gray-500" />
+                  <MapPin size={14} className="mr-2" />
                   {city}
                 </div>
               ),
             }))}
             className="w-full p-3 border border-gray-300 rounded-md outline-none text-sm"
+            scrolled={scrolled}
             defaultLabel={
               <div className="flex items-center">
-                <MapPin size={14} className="mr-2 text-gray-500" />
+                <MapPin size={14} className={`mr-2 ${scrolled ? 'text-white' : 'text-gray-500'}`} />
                 City
               </div>
             }
           />
         </div>
 
-        <div className="flex-none w-40 relative">
+        {/* Date Selection */}
+        <div className="flex-none relative">
           <button
-            ref={dateButtonRef}
-            onClick={() => setShowDatePicker(!showDatePicker)}
-            className="w-full p-3 rounded-md outline-none text-sm text-left flex items-center bg-transparent transition-colors"
+            ref={toggleButtonRef}
+            className="calendar-toggle-button flex items-center gap-4 p-3 rounded-md outline-none text-sm bg-transparent transition-colors"
+            onClick={toggleCalendars}
           >
-            <Calendar size={14} className="mr-2 text-gray-500" />
-            {formatDateDisplay()}
+            {/* Start Date */}
+            <div className="flex items-center">
+              <Calendar size={14} className={`mr-2 ${scrolled ? 'text-white' : 'text-gray-500'}`} />
+              <span className={scrolled ? 'text-white' : 'text-gray-700'}>
+                {formatDateDisplay(startDate, 'Start date')}
+              </span>
+            </div>
+
+            {/* Separator */}
+            <div className={scrolled ? 'text-white' : 'text-gray-400'}>to</div>
+
+            {/* End Date */}
+            <div className="flex items-center">
+              <Calendar size={14} className={`mr-2 ${scrolled ? 'text-white' : 'text-gray-500'}`} />
+              <span className={scrolled ? 'text-white' : 'text-gray-700'}>
+                {formatDateDisplay(endDate, 'End date')}
+              </span>
+            </div>
+
+            {/* Toggle Icon */}
+            {isCalendarsOpen ? (
+              <ChevronUp size={16} className={scrolled ? 'text-white' : 'text-gray-500'} />
+            ) : (
+              <ChevronDown size={16} className={scrolled ? 'text-white' : 'text-gray-500'} />
+            )}
           </button>
-          
-          {showDatePicker && createPortal(<DatePickerContent />, document.body)}
+
+          {/* Calendars Container */}
+          {isCalendarsOpen && (
+            <div
+              ref={calendarContainerRef}
+              className="calendars-container absolute mt-2 bg-white border border-gray-300 rounded-md shadow-lg p-4 z-50"
+            >
+              <div className="flex gap-6">
+                {/* Start Date Calendar */}
+                <div className="flex flex-col items-center">
+                  <h3 className={`text-sm font-medium mb-2 ${scrolled ? 'text-gray-900' : 'text-gray-700'}`}>
+                    Start Date
+                  </h3>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={handleStartDateChange}
+                    minDate={minDate || undefined}
+                    maxDate={endDate || maxDate || undefined}
+                    placeholderText="Select start date"
+                    inline
+                    ref={startDatePickerRef}
+                  />
+                </div>
+
+                {/* End Date Calendar */}
+                <div className="flex flex-col items-center">
+                  <h3 className={`text-sm font-medium mb-2 ${scrolled ? 'text-gray-900' : 'text-gray-700'}`}>
+                    End Date
+                  </h3>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={handleEndDateChange}
+                    minDate={startDate || minDate || undefined}
+                    maxDate={maxDate || undefined}
+                    placeholderText="Select end date"
+                    inline
+                    ref={endDatePickerRef}
+                  />
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200">
+                <button
+                  className={`px-3 py-1.5 text-sm rounded transition-colors ${
+                    scrolled ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100'
+                  }`}
+                  onClick={() => {
+                    setDashboardDateRange?.(null, null);
+                  }}
+                >
+                  Clear
+                </button>
+                <button
+                  className="px-3 py-1.5 text-sm bg-blue-600 text-white hover:bg-blue-700 rounded transition-colors"
+                  onClick={() => setIsCalendarsOpen(false)}
+                >
+                  Done
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
+        {/* Toggle Button */}
+        <div className="flex-none">
+          <button
+            className={`flex items-center justify-center text-center ml-6 gap-2 p-3 w-32 rounded-md outline-none text-sm bg-transparent transition-colors ${
+              scrolled ? 'text-white border-vanilla' : 'text-gray-700 border-flex-green'
+            }`}
+            onClick={() => setIsSummaryView(!isSummaryView)}
+          >
+            <span>{isSummaryView ? 'Details' : 'Summary'}</span>
+          </button>
+        </div>
       </div>
     </div>
   );
