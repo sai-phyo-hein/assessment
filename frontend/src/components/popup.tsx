@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppStore } from '../global-store';
 
 const Modal: React.FC = () => {
     const { setIsAuth, setIsManager } = useAppStore();
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
+
   return (
     <div
-      className="flex items-center justify-center h-screen bg-gray-100"
-      style={{ position: 'fixed', top: 0, left: 0, width: '20%', height: '10%', zIndex: 9999 }}
+      className="flex items-center justify-center h-screen bg-transparent"
+      style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '20%', height: '10%', zIndex: 9999 }}
     >
       <div
-        className="w-[300px] h-[100px] rounded-2xl flex overflow-hidden shadow-lg"
-        style={{
-          background: 'linear-gradient(135deg, #1C4B4B, #f5f2e0ff)',
-        }}
+        className="w-[300px] h-[100px] rounded-2xl flex overflow-hidden gap-2"
       >
         <button
           className="flex-1 h-full text-white font-bold text-lg transition-colors duration-300 hover:bg-white/20"

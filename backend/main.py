@@ -90,6 +90,69 @@ async def get_reviews(propertyId: int = Query(None), propertyIds: list[int] = Qu
     ]
     return result
 
+@app.post("/addreviews")
+async def post_review(review: dict):
+    # Validate required fields
+    required_fields = ["propertyId", "guestName", "publicReview", "rating", "reviewCategory"]
+    for field in required_fields:
+        if field not in review or review[field] is None:
+            return JSONResponse(status_code=400, content={"error": f"Missing required field: {field}"})
+    
+    # Validate reviewCategory is a list
+    if not isinstance(review.get("reviewCategory"), list):
+        return JSONResponse(status_code=400, content={"error": "reviewCategory must be a list"})
+    
+    # Validate rating is between 1 and 10
+    rating = review.get("rating")
+    if not isinstance(rating, int) or rating < 1 or rating > 10:
+        return JSONResponse(status_code=400, content={"error": "Rating must be an integer between 1 and 10"})
+    
+    # Validate guestName and publicReview are not empty
+    if not review.get("guestName", "").strip():
+        return JSONResponse(status_code=400, content={"error": "Guest name cannot be empty"})
+    if not review.get("publicReview", "").strip():
+        return JSONResponse(status_code=400, content={"error": "Review text cannot be empty"})
+    
+    file_path = os.path.join("data", "reviews.json")
+    if not os.path.exists(file_path):
+        return JSONResponse(status_code=404, content={"error": "Reviews not found"})
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+    new_id = max([r.get("id", 0) for r in data], default=0) + 1
+    review["id"] = new_id
+    
+    # Set default values for optional fields
+    review.setdefault("accountId", 1)
+    review.setdefault("listingMapId", 1)
+    review.setdefault("channelId", 2005)
+    review.setdefault("type", "guest-to-host")
+    review.setdefault("status", "completed")
+    review.setdefault("isCancelled", 0)
+    review.setdefault("externalReviewId", f"EXT-{new_id}")
+    review.setdefault("externalReservationId", f"RES-{new_id}")
+    
+    data.append(review)
+    with open(file_path, 'w') as f:
+        json.dump(data, f, indent=4)
+    return {"message": "Review added", "id": new_id}
+
+@app.get("/review-categories")
+async def get_review_categories():
+    file_path = os.path.join("data", "reviews.json")
+    if not os.path.exists(file_path):
+        return JSONResponse(status_code=404, content={"error": "Reviews not found"})
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+    all_categories = ['amenities', 'check-in', 'cleanliness', 'communication', 'environment', 'living', 'location', 'service', 'value']
+    category_count = {cat: 0 for cat in all_categories}
+    for review in data:
+        if review.get("reviewCategory") and isinstance(review["reviewCategory"], list):
+            for cat in review["reviewCategory"]:
+                if cat in category_count:
+                    category_count[cat] += 1
+    result = [{"category": cat, "count": count} for cat, count in category_count.items()]
+    return result
+
 @app.get("/total-properties")
 async def get_total_properties():
     file_path = os.path.join("data", "properties.json")

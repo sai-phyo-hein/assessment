@@ -7,6 +7,7 @@ import PropertyDetailPage from './propertydetails/propertydetailpage';
 import Modal from './components/popup';
 import Dashboard from './dashboardpage/dashboard';
 import { useAppStore } from './global-store';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   const { showPropertyPage, showPropertyDetailPage, pageId, isAuth, isManager} = useAppStore();
@@ -44,6 +45,7 @@ function App() {
         </div>
       )}
       {showModal && <Modal />}
+      <Toaster />
     </div>
   );
 }

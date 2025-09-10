@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAppStore } from '../global-store';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -30,6 +30,7 @@ const SummarySection: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [chartData, setChartData] = useState<MonthlyData[]>([]);
   const [selectedMetric, setSelectedMetric] = useState<string>('averageRating');
+  const [barData, setBarData] = useState<any[]>([]);
 
   const formatDateForAPI = (date: Date | null | undefined): string | undefined => {
     if (!date) return undefined;
@@ -101,6 +102,14 @@ const SummarySection: React.FC = () => {
         const reviewsData: TotalReviewsData = await reviewsResponse.json();
         setTotalReviews(reviewsData.totalReviews);
 
+        // Fetch reviews for categories
+        const reviewsFetchResponse = await fetch(`${BACKEND_URL}/review-categories`);
+        if (!reviewsFetchResponse.ok) {
+          throw new Error('Failed to fetch review categories');
+        }
+        const barData = await reviewsFetchResponse.json();
+        setBarData(barData);
+
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
@@ -163,19 +172,35 @@ const SummarySection: React.FC = () => {
         </div>
       </div>
       <div className="mt-8">
-        <h3 className="text-xl font-semibold mb-4">
-          Monthly {selectedMetric === 'averageRating' ? 'Average Rating' : selectedMetric === 'totalReviewedProperties' ? 'Total Reviewed Properties' : 'Total Reviews'}
-        </h3>
         <div className="bg-white rounded-lg shadow-md p-6">
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="month" />
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="value" stroke="#0a3c26" strokeWidth={2} />
-            </LineChart>
-          </ResponsiveContainer>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div>
+              <h4 className="text-lg font-semibold mb-2">
+                Monthly {selectedMetric === 'averageRating' ? 'Average Rating' : selectedMetric === 'totalReviewedProperties' ? 'Total Reviewed Properties' : 'Total Reviews'}
+              </h4>
+              <ResponsiveContainer width="100%" height={300}>
+                <LineChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="month" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line type="monotone" dataKey="value" stroke="#0a3c26" strokeWidth={2} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold mb-2">Review Categories</h4>
+              <ResponsiveContainer width="100%" height={300}>
+                <BarChart data={barData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="category" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar dataKey="count" fill="#0a3c26" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
         </div>
       </div>
     </div>
