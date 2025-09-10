@@ -27,7 +27,7 @@ const DetailSection: React.FC<DetailSectionProps> = ({ type, properties }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [reviews, setReviews] = useState<any[]>([]);
 
-  const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
+  const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
   useEffect(() => {
     const fetchPropertyData = async () => {

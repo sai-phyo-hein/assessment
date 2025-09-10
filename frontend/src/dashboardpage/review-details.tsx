@@ -14,7 +14,7 @@ interface Property {
   averageRating: number;
 }
 
-const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
+const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 const ReviewDetails: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'high-values' | 'need-attention'>('high-values');

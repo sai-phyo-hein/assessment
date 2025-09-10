@@ -12,7 +12,7 @@ interface Review {
   reviewCategory?: string[];
 }
 
-const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
+const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 const categories = ['amenities', 'check-in', 'cleanliness', 'communication', 'environment', 'living', 'location', 'service', 'value'];
 

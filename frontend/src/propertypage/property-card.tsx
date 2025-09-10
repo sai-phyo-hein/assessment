@@ -3,7 +3,7 @@ import { Bed, Bath, Users } from 'lucide-react';
 
 import { useAppStore, Property } from '../global-store';
 
-const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
+const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 interface PropertyCardProps {
   property: Property;
