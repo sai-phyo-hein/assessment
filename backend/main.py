@@ -150,6 +150,7 @@ async def get_review_categories():
                 if cat in category_count:
                     category_count[cat] += 1
     result = [{"category": cat, "count": count} for cat, count in category_count.items()]
+    result.sort(key=lambda x: x["count"], reverse=True)
     return result
 
 @app.get("/total-properties")
