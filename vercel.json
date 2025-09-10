@@ -1,10 +1,27 @@
 {
-  "version": 2,
-  "outputDirectory": "frontend/dist",
+  "builds": [
+    {
+      "src": "backend/main.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "frontend/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    }
+  ],
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "backend/main.py"
+    },
+    {
       "src": "/(.*)",
-      "dest": "/$1"
+      "dest": "frontend/dist/$1"
     }
-  ]
+  ],
+  "installCommand": "cd backend && pip install poetry && poetry install --only=main && cd ../frontend && npm install -g pnpm && pnpm install",
+  "buildCommand": "cd backend && poetry build && cd ../frontend && pnpm build"
 }
