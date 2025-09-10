@@ -55,8 +55,32 @@ const DetailSection: React.FC<DetailSectionProps> = ({ type, properties }) => {
     fetchPropertyData();
   }, [dbSelectedProperty]);
 
-  const handleApprove = (reviewId: number) => {
-    setReviews(prev => prev.map(review => review.id === reviewId ? { ...review, approved: !review.approved } : review));
+  const handleApprove = async (reviewId: number) => {
+    const review = reviews.find(r => r.id === reviewId);
+    if (!review) return;
+
+    const newApproved = !review.approved;
+
+    // Optimistically update local state
+    setReviews(prev => prev.map(r => r.id === reviewId ? { ...r, approved: newApproved } : r));
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/reviews/${reviewId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ approved: newApproved }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update review approval');
+      }
+    } catch (error) {
+      console.error('Error updating review approval:', error);
+      // Revert local state on error
+      setReviews(prev => prev.map(r => r.id === reviewId ? { ...r, approved: !newApproved } : r));
+    }
   };
 
   return (
@@ -138,7 +162,12 @@ const DetailSection: React.FC<DetailSectionProps> = ({ type, properties }) => {
                     <tr key={review.id}>
                       <td className="text-sm px-4 py-2">{review.publicReview}</td>
                       <td className="text-sm px-4 py-2">
-                        <input type="checkbox" checked={review.approved} onChange={() => handleApprove(review.id)} />
+                        <input 
+                          type="checkbox" 
+                          checked={review.approved} 
+                          disabled={type === 'need-attention' && !review.approved}
+                          onChange={() => handleApprove(review.id)} 
+                        />
                       </td>
                     </tr>
                   ))}

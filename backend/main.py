@@ -199,6 +199,40 @@ async def get_total_reviews():
         data = json.load(f)
     return {"totalReviews": len(data)}
 
+@app.put("/reviews/{review_id}")
+async def approve_review(review_id: int, review_update: dict):
+    # Validate that approved field is provided
+    if "approved" not in review_update:
+        return JSONResponse(status_code=400, content={"error": "Missing 'approved' field"})
+    
+    approved = review_update["approved"]
+    if not isinstance(approved, bool):
+        return JSONResponse(status_code=400, content={"error": "'approved' must be a boolean"})
+    
+    file_path = os.path.join("data", "reviews.json")
+    if not os.path.exists(file_path):
+        return JSONResponse(status_code=404, content={"error": "Reviews not found"})
+    
+    with open(file_path, 'r') as f:
+        data = json.load(f)
+    
+    # Find and update the review
+    review_found = False
+    for review in data:
+        if review.get("id") == review_id:
+            review["approved"] = approved
+            review_found = True
+            break
+    
+    if not review_found:
+        return JSONResponse(status_code=404, content={"error": "Review not found"})
+    
+    # Save the updated data
+    with open(file_path, 'w') as f:
+        json.dump(data, f, indent=4)
+    
+    return {"message": "Review approval status updated", "id": review_id, "approved": approved}
+
 @app.get("/average-rating")
 async def get_average_rating(start_date: str = Query(None), end_date: str = Query(None)):
     file_path = os.path.join("data", "reviews.json")

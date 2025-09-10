@@ -56,7 +56,9 @@ const ReviewSlideShow: React.FC = () => {
         }
         const data = await res.json();
         
-        setReviews(data);
+        // Filter to only show approved reviews
+        const approvedReviews = data.filter((review: any) => review.approved === true);
+        setReviews(approvedReviews);
         setCurrentIndex(0);
       } catch (err: any) {
         console.error('Fetch Error:', err);
@@ -160,7 +162,9 @@ const ReviewSlideShow: React.FC = () => {
             throw new Error(`Failed to fetch reviews: ${res.status} ${errorText}`);
           }
           const data = await res.json();
-          setReviews(data);
+          // Filter to only show approved reviews
+          const approvedReviews = data.filter((review: any) => review.approved === true);
+          setReviews(approvedReviews);
           setCurrentIndex(0);
         } catch (err: any) {
           setError(err.name === 'AbortError' ? 'Request timed out' : err.message);
