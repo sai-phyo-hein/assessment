@@ -43,7 +43,7 @@ const Navbar: React.FC<NavbarProps> = () => {
               alt="The Flex Logo"
               className="w-8 h-8 mr-3"
             />
-            the flex.
+            the logo.
           </a>
 
           {/* Search Bar */}
