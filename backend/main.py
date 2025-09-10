@@ -17,7 +17,7 @@ logging.basicConfig(level=logging.INFO)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "https://assessment-orpin-six.vercel.app"],  # Frontend URLs
+    allow_origins=["*"],  # Frontend URLs
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -32,6 +32,10 @@ async def root():
 @app.get("/health")
 async def health():
     return {"status": "healthy"}
+
+# Export for Vercel
+def handler(request):
+    return app(request)
 
 @app.get("/logos/{filename}")
 async def get_logo(filename: str):
