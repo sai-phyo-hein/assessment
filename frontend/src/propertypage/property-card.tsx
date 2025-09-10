@@ -1,15 +1,9 @@
 import React from 'react';
 import { Bed, Bath, Users } from 'lucide-react';
-import { useAppStore } from '../global-store';
 
-interface Property {
-  name: string;
-  per_night_price: number;
-  location: string;
-  bedrooms: number;
-  bathrooms: number;
-  max_guests: number;
-}
+import { useAppStore, Property } from '../global-store';
+
+const BACKEND_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface PropertyCardProps {
   property: Property;
@@ -18,14 +12,20 @@ interface PropertyCardProps {
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ 
   property, 
-  imageUrl = "https://placehold.co/600x400"  // Default image URL
+  imageUrl = `${BACKEND_URL}/images/${property.id}/` + `${100 + property.id}_frontal.jpg`  // Dynamic image URL from backend
 }) => {
-  const { setShowPropertyDetailPage, setShowPropertyPage } = useAppStore();
+  const { setShowPropertyDetailPage, setShowPropertyPage, setPageId, setSelectedProperty } = useAppStore();
 
   const handleClick = () => {
-    console.log("Property Card is clicked.")
     setShowPropertyDetailPage(true);
     setShowPropertyPage(false);
+    if (setPageId) {
+      setPageId(property.id.toString());
+      
+    }
+    if (setSelectedProperty) {
+      setSelectedProperty(property);
+    }
   };
 
   return (
