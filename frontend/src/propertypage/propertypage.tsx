@@ -1,15 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from './property-search-bar';
 import PropertyCard from './property-card';
-
-interface Property {
-  name: string;
-  per_night_price: number;
-  location: string;
-  bedrooms: number;
-  bathrooms: number;
-  max_guests: number;
-}
+import { Property } from '../global-store';
 
 const PropertyPage: React.FC = () => {
   const [properties, setProperties] = useState<Property[]>([]);
@@ -19,7 +11,7 @@ const PropertyPage: React.FC = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await fetch('http://localhost:8000/properties');
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || 'https://assessment-orpin-six.vercel.app'}/properties`);
         if (!response.ok) {
           throw new Error('Failed to fetch properties');
         }
