@@ -66,7 +66,6 @@ async def get_image(folder_id: str, filename: str):
 
 @app.get("/reviews")
 async def get_reviews(propertyId: int = Query(None), propertyIds: list[int] = Query(None)):
-    logging.info(f"Received propertyId: {propertyId}, propertyIds: {propertyIds}")
     file_path = os.path.join("data", "reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
