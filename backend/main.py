@@ -40,10 +40,6 @@ async def root():
 async def health():
     return {"status": "healthy"}
 
-# Export for Vercel
-from mangum import Mangum
-handler = Mangum(app)
-
 @app.get("/logos/{filename}")
 async def get_logo(filename: str):
     file_path = os.path.join(DATA_DIR, "images", "logos", filename)
