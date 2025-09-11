@@ -20,7 +20,7 @@ const ReviewSlideShow: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [newReview, setNewReview] = useState({ guestName: '', publicReview: '', rating: 0, categories: [] as string[] });
+  const [newReview, setNewReview] = useState({ guestName: '', publicReview: '', rating: 0, categories: [] as string[], departureDate: '' });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -121,6 +121,15 @@ const ReviewSlideShow: React.FC = () => {
     setError(null); // Clear any previous errors
     setSubmitting(true);
 
+    // Generate current datetime in the required format
+    const now = new Date();
+    const currentDateTime = now.getFullYear() + '-' + 
+                           String(now.getMonth() + 1).padStart(2, '0') + '-' + 
+                           String(now.getDate()).padStart(2, '0') + ' ' + 
+                           String(now.getHours()).padStart(2, '0') + ':' + 
+                           String(now.getMinutes()).padStart(2, '0') + ':' + 
+                           String(now.getSeconds()).padStart(2, '0');
+
     try {
       const response = await fetch(`${BACKEND_URL}/addreviews`, {
         method: 'POST',
@@ -133,6 +142,7 @@ const ReviewSlideShow: React.FC = () => {
           rating: newReview.rating,
           reviewCategory: newReview.categories,
           propertyId: propertyId,
+          departureDate: currentDateTime,
         }),
       });
 
@@ -143,7 +153,7 @@ const ReviewSlideShow: React.FC = () => {
       }
 
       // Reset form
-      setNewReview({ guestName: '', publicReview: '', rating: 0, categories: [] });
+      setNewReview({ guestName: '', publicReview: '', rating: 0, categories: [], departureDate: '' });
       setIsPopupOpen(false);
       setError(null); // Clear any previous errors
 
@@ -342,6 +352,13 @@ const ReviewSlideShow: React.FC = () => {
                     ))}
                   </div>
                 </div>
+                <label className="block text-sm font-medium mb-1">Departure Date</label>
+                <input
+                  type="date"
+                  value={newReview.departureDate}
+                  onChange={(e) => setNewReview({ ...newReview, departureDate: e.target.value })}
+                  className="w-full p-2 mb-2 border rounded"
+                />
                 <p className="text-xs text-gray-500 mb-4">* Required fields</p>
                 <div className="flex justify-end gap-2">
                   <button

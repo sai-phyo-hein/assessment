@@ -11,8 +11,8 @@ from collections import defaultdict
 
 app = FastAPI(title="Flex Living Backend", description="API for Flex Living app")
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
+# Configure logging - Hide INFO logs, only show WARNING and ERROR
+logging.basicConfig(level=logging.WARNING)
 # Add CORS middleware
 
 app.add_middleware(
@@ -90,7 +90,8 @@ async def get_reviews(propertyId: int = Query(None), propertyIds: list[int] = Qu
             "guestName": r.get("guestName"),
             "publicReview": r.get("publicReview"),
             "rating": r.get("rating", 0),
-            "reviewCategory": r.get("reviewCategory", [])
+            "reviewCategory": r.get("reviewCategory", []),
+            "approved": r.get("approved", False)
         }
         for r in filtered if r.get("publicReview") and r.get("guestName")
     ]
@@ -119,7 +120,7 @@ async def post_review(review: dict):
     if not review.get("publicReview", "").strip():
         return JSONResponse(status_code=400, content={"error": "Review text cannot be empty"})
     
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:
@@ -144,7 +145,7 @@ async def post_review(review: dict):
 
 @app.get("/review-categories")
 async def get_review_categories():
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:
@@ -162,7 +163,7 @@ async def get_review_categories():
 
 @app.get("/total-properties")
 async def get_total_properties():
-    file_path = os.path.join("data", "properties.json")
+    file_path = get_data_path("properties.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Properties not found"})
     with open(file_path, 'r') as f:
@@ -171,7 +172,7 @@ async def get_total_properties():
 
 @app.get("/total-reviewed-properties")
 async def get_total_reviewed_properties(start_date: str = Query(None), end_date: str = Query(None)):
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:
@@ -199,7 +200,7 @@ async def get_total_reviewed_properties(start_date: str = Query(None), end_date:
 
 @app.get("/total-reviews")
 async def get_total_reviews():
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:
@@ -216,7 +217,7 @@ async def approve_review(review_id: int, review_update: dict):
     if not isinstance(approved, bool):
         return JSONResponse(status_code=400, content={"error": "'approved' must be a boolean"})
     
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     
@@ -242,7 +243,7 @@ async def approve_review(review_id: int, review_update: dict):
 
 @app.get("/average-rating")
 async def get_average_rating(start_date: str = Query(None), end_date: str = Query(None)):
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:
@@ -268,7 +269,7 @@ async def get_average_rating(start_date: str = Query(None), end_date: str = Quer
 
 @app.get("/total-reviews-filtered")
 async def get_total_reviews_filtered(start_date: str = Query(None), end_date: str = Query(None)):
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:
@@ -290,7 +291,7 @@ async def get_total_reviews_filtered(start_date: str = Query(None), end_date: st
 
 @app.get("/reviews-date-range")
 async def get_reviews_date_range():
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:
@@ -311,7 +312,7 @@ async def get_reviews_date_range():
 
 @app.get("/monthly-average-rating")
 async def get_monthly_average_rating():
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:
@@ -336,7 +337,7 @@ async def get_monthly_average_rating():
 
 @app.get("/monthly-total-reviewed-properties")
 async def get_monthly_total_reviewed_properties():
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:
@@ -360,7 +361,7 @@ async def get_monthly_total_reviewed_properties():
 
 @app.get("/monthly-total-reviews")
 async def get_monthly_total_reviews():
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:
@@ -385,7 +386,7 @@ async def get_monthly_total_reviews():
 @app.get("/property-performance")
 async def get_property_performance():
     # Load properties
-    properties_file = os.path.join("data", "properties.json")
+    properties_file = get_data_path("properties.json")
     if not os.path.exists(properties_file):
         return JSONResponse(status_code=404, content={"error": "Properties not found"})
     
@@ -394,7 +395,7 @@ async def get_property_performance():
     properties = properties_data.get("properties", [])
     
     # Load reviews
-    reviews_file = os.path.join("data", "reviews.json")
+    reviews_file = get_data_path("reviews.json")
     if not os.path.exists(reviews_file):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     
@@ -406,7 +407,7 @@ async def get_property_performance():
     for review in reviews:
         property_id = review.get("propertyId")
         rating = review.get("rating")
-        if property_id and rating is not None:
+        if property_id is not None and rating is not None:
             if property_id not in property_ratings:
                 property_ratings[property_id] = {"total": 0, "count": 0}
             property_ratings[property_id]["total"] += rating
@@ -422,7 +423,11 @@ async def get_property_performance():
         
         if rating_data and rating_data["count"] > 0:
             average_rating = rating_data["total"] / rating_data["count"]
-            prop_with_rating = {**prop, "averageRating": round(average_rating, 2)}
+            prop_with_rating = {
+                **prop, 
+                "averageRating": round(average_rating, 2),
+                "reviewCount": rating_data["count"]
+            }
             
             if average_rating > 5:
                 high_value_properties.append(prop_with_rating)
@@ -430,14 +435,14 @@ async def get_property_performance():
                 need_attention_properties.append(prop_with_rating)
         else:
             # Properties with no reviews go to need-attention with rating 0
-            prop_with_rating = {**prop, "averageRating": 0}
+            prop_with_rating = {**prop, "averageRating": 0, "reviewCount": 0}
             need_attention_properties.append(prop_with_rating)
     
-    # Sort high-value properties by average rating descending
-    high_value_properties.sort(key=lambda x: x["averageRating"], reverse=True)
+    # Sort high-value properties by (average rating * review count) descending
+    high_value_properties.sort(key=lambda x: x["averageRating"] * x.get("reviewCount", 0), reverse=True)
     
-    # Sort need-attention properties by average rating ascending
-    need_attention_properties.sort(key=lambda x: x["averageRating"])
+    # Sort need-attention properties by (average rating * review count) ascending
+    need_attention_properties.sort(key=lambda x: x["averageRating"] * x.get("reviewCount", 0))
     
     return {
         "highValue": high_value_properties,
@@ -446,7 +451,7 @@ async def get_property_performance():
 
 @app.get("/property-monthly-rating/{property_id}")
 async def get_property_monthly_rating(property_id: int):
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Gallery } from './gallery';
 import { Image, useAppStore } from '../global-store';
-import { Bed, Bath, Users } from 'lucide-react';
+import { Bed, Bath, Users, ArrowLeft } from 'lucide-react';
 import ReviewSlideShow from './review-slideshow';
 
 const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || '/api';
@@ -15,6 +15,13 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ folderId }) => 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const selectedProperty = useAppStore((state) => state.selectedProperty);
+  const setShowPropertyDetailPage = useAppStore((state) => state.setShowPropertyDetailPage);
+  const setShowPropertyPage = useAppStore((state) => state.setShowPropertyPage);
+
+  const handleBackToPropertyPage = () => {
+    setShowPropertyDetailPage(false);
+    setShowPropertyPage(true);
+  };
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -47,6 +54,17 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ folderId }) => 
 
   return (
     <div className="container mx-auto p-4 flex flex-col">
+      {/* Back Button */}
+      <div className="mb-4">
+        <button
+          onClick={handleBackToPropertyPage}
+          className="flex items-center gap-2 text-gray-600 hover:text-gray-800 transition-colors duration-200 bg-white px-4 py-2 rounded-lg shadow-sm hover:shadow-md"
+        >
+          <ArrowLeft className="w-5 h-5" />
+          <span>Back to Properties</span>
+        </button>
+      </div>
+      
       {loading && <div>Loading images...</div>}
       {error && <div className="text-red-500">{error}</div>}
       {!loading && !error && <Gallery images={images} />}

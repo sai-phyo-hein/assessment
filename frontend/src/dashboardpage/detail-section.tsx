@@ -43,7 +43,7 @@ const DetailSection: React.FC<DetailSectionProps> = ({ type, properties }) => {
         const reviewResponse = await fetch(`${BACKEND_URL}/reviews?propertyId=${dbSelectedProperty.id}`);
         if (reviewResponse.ok) {
           const reviewData = await reviewResponse.json();
-          setReviews(reviewData.map((review: any) => ({ ...review, approved: false })));
+          setReviews(reviewData);
         }
       } catch (error) {
         console.error('Error fetching property data:', error);
@@ -58,7 +58,7 @@ const DetailSection: React.FC<DetailSectionProps> = ({ type, properties }) => {
   const handleApprove = async (reviewId: number) => {
     const review = reviews.find(r => r.id === reviewId);
     if (!review) return;
-
+    console.log("REviews:", reviews);
     const newApproved = !review.approved;
 
     // Optimistically update local state

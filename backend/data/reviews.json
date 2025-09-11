@@ -577,7 +577,8 @@
         "departureDate": "2022-07-03 10:00:00",
         "arrivalDate": "2022-06-28 17:00:00",
         "listingName": "Spacious 2 Bed Apartment in Maida Vale",
-        "guestName": "Abigail Miller"
+        "guestName": "Abigail Miller",
+        "approved": true
     },
     {
         "id": 21,
@@ -606,7 +607,8 @@
         "departureDate": "2024-02-12 11:00:00",
         "arrivalDate": "2024-02-08 15:00:00",
         "listingName": "Spacious 2 Bed Apartment in Maida Vale",
-        "guestName": "Michael Brown"
+        "guestName": "Michael Brown",
+        "approved": true
     },
     {
         "id": 22,
@@ -751,7 +753,8 @@
         "departureDate": "2022-12-22 11:00:00",
         "arrivalDate": "2022-12-18 14:00:00",
         "listingName": "Central 2 Bed Flat in Camden with Garden",
-        "guestName": "Chloe Williams"
+        "guestName": "Chloe Williams",
+        "approved": true
     },
     {
         "id": 27,
@@ -837,7 +840,8 @@
         "departureDate": "2022-02-15 11:00:00",
         "arrivalDate": "2022-02-10 16:00:00",
         "listingName": "Charming Apartment in Belsize Park",
-        "guestName": "Joseph Miller"
+        "guestName": "Joseph Miller",
+        "approved": true
     },
     {
         "id": 30,
@@ -866,7 +870,8 @@
         "departureDate": "2024-08-28 10:00:00",
         "arrivalDate": "2024-08-22 14:00:00",
         "listingName": "Charming Apartment in Belsize Park",
-        "guestName": "Avery Garcia"
+        "guestName": "Avery Garcia",
+        "approved": true
     },
     {
         "id": 31,
@@ -1011,7 +1016,8 @@
         "departureDate": "2022-06-25 10:00:00",
         "arrivalDate": "2022-06-20 16:00:00",
         "listingName": "Luxurious 2 Bed Balcony Flat in Colindale",
-        "guestName": "Grace Johnson"
+        "guestName": "Grace Johnson",
+        "approved": true
     },
     {
         "id": 36,
@@ -1040,7 +1046,8 @@
         "departureDate": "2025-04-01 12:00:00",
         "arrivalDate": "2025-03-28 14:00:00",
         "listingName": "Luxurious 2 Bed Balcony Flat in Colindale",
-        "guestName": "Henry Rodriguez"
+        "guestName": "Henry Rodriguez",
+        "approved": true
     },
     {
         "id": 37,
@@ -1561,7 +1568,8 @@
         "departureDate": "2023-03-12 10:00:00",
         "arrivalDate": "2023-03-08 15:00:00",
         "listingName": "Spacious 1 Bed Flat in Angel",
-        "guestName": "Lincoln Rodriguez"
+        "guestName": "Lincoln Rodriguez",
+        "approved": true
     },
     {
         "id": 55,
@@ -1590,7 +1598,8 @@
         "departureDate": "2022-11-20 11:00:00",
         "arrivalDate": "2022-11-15 19:00:00",
         "listingName": "Spacious 1 Bed Flat in Angel",
-        "guestName": "Riley Miller"
+        "guestName": "Riley Miller",
+        "approved": true
     },
     {
         "id": 56,
@@ -2083,7 +2092,8 @@
         "departureDate": "2023-09-08 12:00:00",
         "arrivalDate": "2023-09-02 14:00:00",
         "listingName": "Lovely 2 Bed Apartment in Peckham",
-        "guestName": "Paisley Rodriguez"
+        "guestName": "Paisley Rodriguez",
+        "approved": true
     },
     {
         "id": 73,
@@ -2112,7 +2122,8 @@
         "departureDate": "2022-07-20 11:00:00",
         "arrivalDate": "2022-07-15 18:00:00",
         "listingName": "Lovely 2 Bed Apartment in Peckham",
-        "guestName": "Everett Miller"
+        "guestName": "Everett Miller",
+        "approved": true
     },
     {
         "id": 74,
@@ -2913,7 +2924,8 @@
         "status": "completed",
         "isCancelled": 0,
         "externalReviewId": "EXT-101",
-        "externalReservationId": "RES-101"
+        "externalReservationId": "RES-101",
+        "approved": true
     },
     {
         "guestName": "Sai",
@@ -2931,7 +2943,8 @@
         "status": "completed",
         "isCancelled": 0,
         "externalReviewId": "EXT-102",
-        "externalReservationId": "RES-102"
+        "externalReservationId": "RES-102",
+        "approved": true
     },
     {
         "guestName": "Phyo",
@@ -2949,6 +2962,66 @@
         "status": "completed",
         "isCancelled": 0,
         "externalReviewId": "EXT-103",
-        "externalReservationId": "RES-103"
+        "externalReservationId": "RES-103",
+        "approved": true
+    },
+    {
+        "guestName": "Sai",
+        "publicReview": "Great!",
+        "rating": 10,
+        "reviewCategory": [
+            "living"
+        ],
+        "propertyId": 14,
+        "id": 104,
+        "accountId": 1,
+        "listingMapId": 1,
+        "channelId": 2005,
+        "type": "guest-to-host",
+        "status": "completed",
+        "isCancelled": 0,
+        "externalReviewId": "EXT-104",
+        "externalReservationId": "RES-104",
+        "approved": true
+    },
+    {
+        "guestName": "Greate",
+        "publicReview": "Great!",
+        "rating": 10,
+        "reviewCategory": [
+            "check-in",
+            "communication",
+            "service"
+        ],
+        "propertyId": 18,
+        "id": 105,
+        "accountId": 1,
+        "listingMapId": 1,
+        "channelId": 2005,
+        "type": "guest-to-host",
+        "status": "completed",
+        "isCancelled": 0,
+        "externalReviewId": "EXT-105",
+        "externalReservationId": "RES-105",
+        "approved": true
+    },
+    {
+        "guestName": "Hi",
+        "publicReview": "Greate",
+        "rating": 10,
+        "reviewCategory": [
+            "service"
+        ],
+        "propertyId": 0,
+        "id": 106,
+        "accountId": 1,
+        "listingMapId": 1,
+        "channelId": 2005,
+        "type": "guest-to-host",
+        "status": "completed",
+        "isCancelled": 0,
+        "externalReviewId": "EXT-106",
+        "externalReservationId": "RES-106",
+        "approved": true
     }
 ]
