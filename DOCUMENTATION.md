@@ -1,5 +1,7 @@
 # Flex Living Assessment App - Technical Documentation
 
+## Demo: https://jam.dev/c/c0fce8ba-5c83-47d4-a757-dbeeb15dbc07
+
 ## Tech Stack
 
 ### Backend

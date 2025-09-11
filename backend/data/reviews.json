@@ -171,7 +171,8 @@
         "departureDate": "2023-07-25 13:00:00",
         "arrivalDate": "2023-07-20 12:00:00",
         "listingName": "Trendy 1 Bed Flat by St Katharine Docks",
-        "guestName": "William Davis"
+        "guestName": "William Davis",
+        "approved": false
     },
     {
         "id": 7,
@@ -200,7 +201,8 @@
         "departureDate": "2024-03-10 11:00:00",
         "arrivalDate": "2024-03-03 17:00:00",
         "listingName": "Trendy 1 Bed Flat by St Katharine Docks",
-        "guestName": "Sophia Johnson"
+        "guestName": "Sophia Johnson",
+        "approved": true
     },
     {
         "id": 8,
@@ -3042,5 +3044,47 @@
         "isCancelled": 0,
         "externalReviewId": "EXT-107",
         "externalReservationId": "RES-107"
+    },
+    {
+        "guestName": "Hein",
+        "publicReview": "Nice environment.",
+        "rating": 10,
+        "reviewCategory": [
+            "environment",
+            "living"
+        ],
+        "propertyId": 0,
+        "departureDate": "2025-09-11 12:28:42",
+        "id": 108,
+        "accountId": 1,
+        "listingMapId": 1,
+        "channelId": 2005,
+        "type": "guest-to-host",
+        "status": "completed",
+        "isCancelled": 0,
+        "externalReviewId": "EXT-108",
+        "externalReservationId": "RES-108"
+    },
+    {
+        "guestName": "Hi, ",
+        "publicReview": "The environment is very nice. ",
+        "rating": 9,
+        "reviewCategory": [
+            "environment",
+            "living",
+            "location"
+        ],
+        "propertyId": 2,
+        "departureDate": "2025-09-11 12:30:30",
+        "id": 109,
+        "accountId": 1,
+        "listingMapId": 1,
+        "channelId": 2005,
+        "type": "guest-to-host",
+        "status": "completed",
+        "isCancelled": 0,
+        "externalReviewId": "EXT-109",
+        "externalReservationId": "RES-109",
+        "approved": true
     }
 ]
