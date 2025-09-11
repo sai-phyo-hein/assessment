@@ -23,7 +23,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-IMAGES_BASE_PATH = os.path.join("data", "images", "images")
+# Get the directory where this script is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+IMAGES_BASE_PATH = os.path.join(DATA_DIR, "images", "images")
+
+def get_data_path(filename):
+    """Helper function to get absolute path to data files"""
+    return os.path.join(DATA_DIR, filename)
 
 @app.get("/")
 async def root():
@@ -34,19 +41,19 @@ async def health():
     return {"status": "healthy"}
 
 # Export for Vercel
-def handler(request):
-    return app(request)
+from mangum import Mangum
+handler = Mangum(app)
 
 @app.get("/logos/{filename}")
 async def get_logo(filename: str):
-    file_path = os.path.join("data", "images", "logos", filename)
+    file_path = os.path.join(DATA_DIR, "images", "logos", filename)
     if os.path.exists(file_path):
         return FileResponse(file_path, media_type='image/png')
     return {"error": "Logo not found"}
 
 @app.get("/properties")
 async def get_properties():
-    file_path = os.path.join("data", "properties.json")
+    file_path = get_data_path("properties.json")
     if os.path.exists(file_path):
         with open(file_path, 'r') as f:
             data = json.load(f)
@@ -70,7 +77,7 @@ async def get_image(folder_id: str, filename: str):
 
 @app.get("/reviews")
 async def get_reviews(propertyId: int = Query(None), propertyIds: list[int] = Query(None)):
-    file_path = os.path.join("data", "reviews.json")
+    file_path = get_data_path("reviews.json")
     if not os.path.exists(file_path):
         return JSONResponse(status_code=404, content={"error": "Reviews not found"})
     with open(file_path, 'r') as f:

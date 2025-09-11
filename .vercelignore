@@ -1,0 +1,18 @@
+# Development files
+node_modules/
+.git/
+.vscode/
+*.log
+.DS_Store
+
+# Backend files that Vercel doesn't need
+backend/__pycache__/
+backend/.venv/
+backend/poetry.lock
+backend/pyproject.toml
+
+# Frontend dev files
+frontend/node_modules/
+frontend/.vscode/
+frontend/src/**/*.test.*
+frontend/src/**/*.spec.*
