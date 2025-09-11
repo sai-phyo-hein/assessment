@@ -10,7 +10,13 @@ import { useAppStore } from './global-store';
 import { Toaster } from 'react-hot-toast';
 
 function App() {
-  const { showPropertyPage, showPropertyDetailPage, pageId, isAuth, isManager} = useAppStore();
+  const {
+    showPropertyPage,
+    showPropertyDetailPage,
+    pageId,
+    isAuth,
+    isManager,
+  } = useAppStore();
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -39,8 +45,7 @@ function App() {
             </>
           )}
           <main className="mt-20 p-8">
-            <div className="container mx-auto">
-            </div>
+            <div className="container mx-auto"></div>
           </main>
         </div>
       )}

@@ -11,7 +11,9 @@ const PropertyPage: React.FC = () => {
   useEffect(() => {
     const fetchProperties = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL || '/api'}/properties`);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL || '/api'}/properties`
+        );
         if (!response.ok) {
           throw new Error('Failed to fetch properties');
         }
@@ -35,18 +37,16 @@ const PropertyPage: React.FC = () => {
             <SearchBar />
           </div>
           <div className="p-2.5">
-          {!loading && !error && (
-            <div className="grid grid-cols-2 gap-4">
-              {properties.map((property, index) => (
-                <PropertyCard key={index} property={property} />
-              ))}
-            </div>
-          )}
+            {!loading && !error && (
+              <div className="grid grid-cols-2 gap-4">
+                {properties.map((property, index) => (
+                  <PropertyCard key={index} property={property} />
+                ))}
+              </div>
+            )}
           </div>
         </div>
-        <div className="w-2/5 bg-gray-300 p-5 overflow-auto">
-          Map
-        </div>
+        <div className="w-2/5 bg-gray-300 p-5 overflow-auto">Map</div>
       </div>
     </div>
   );

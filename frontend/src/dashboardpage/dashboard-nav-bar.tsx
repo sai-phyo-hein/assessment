@@ -18,7 +18,6 @@ const Navbar: React.FC<NavbarProps> = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-
   return (
     <nav
       className={`fixed top-0 w-full z-50 h-20 shadow-sm transition-all duration-300 ease-in-out ${

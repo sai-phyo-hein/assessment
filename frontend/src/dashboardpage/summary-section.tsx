@@ -1,6 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useAppStore } from '../global-store';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+} from 'recharts';
 
 const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
@@ -24,7 +34,9 @@ interface MonthlyData {
 const SummarySection: React.FC = () => {
   const { startDate, endDate } = useAppStore();
   const [averageRating, setAverageRating] = useState<number | null>(null);
-  const [totalReviewedProperties, setTotalReviewedProperties] = useState<number | null>(null);
+  const [totalReviewedProperties, setTotalReviewedProperties] = useState<
+    number | null
+  >(null);
   const [totalReviews, setTotalReviews] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -32,7 +44,9 @@ const SummarySection: React.FC = () => {
   const [selectedMetric, setSelectedMetric] = useState<string>('averageRating');
   const [barData, setBarData] = useState<any[]>([]);
 
-  const formatDateForAPI = (date: Date | null | undefined): string | undefined => {
+  const formatDateForAPI = (
+    date: Date | null | undefined
+  ): string | undefined => {
     if (!date) return undefined;
     return date.toISOString().split('T')[0]; // Format as YYYY-MM-DD
   };
@@ -58,7 +72,11 @@ const SummarySection: React.FC = () => {
       const data = await response.json();
       const formattedData = data[key].map((item: any) => ({
         month: item.month,
-        value: item[metric] || item.averageRating || item.totalReviewedProperties || item.totalReviews
+        value:
+          item[metric] ||
+          item.averageRating ||
+          item.totalReviewedProperties ||
+          item.totalReviews,
       }));
       setChartData(formattedData);
     } catch (err) {
@@ -70,16 +88,18 @@ const SummarySection: React.FC = () => {
     const fetchSummaryData = async () => {
       try {
         setLoading(true);
-        
+
         const startDateParam = formatDateForAPI(startDate);
         const endDateParam = formatDateForAPI(endDate);
         const queryParams = new URLSearchParams();
         if (startDateParam) queryParams.append('start_date', startDateParam);
         if (endDateParam) queryParams.append('end_date', endDateParam);
         const queryString = queryParams.toString();
-        
+
         // Fetch average rating with date filter
-        const ratingResponse = await fetch(`${BACKEND_URL}/average-rating${queryString ? '?' + queryString : ''}`);
+        const ratingResponse = await fetch(
+          `${BACKEND_URL}/average-rating${queryString ? '?' + queryString : ''}`
+        );
         if (!ratingResponse.ok) {
           throw new Error('Failed to fetch average rating');
         }
@@ -87,15 +107,20 @@ const SummarySection: React.FC = () => {
         setAverageRating(ratingData.averageRating);
 
         // Fetch total reviewed properties with date filter
-        const propertiesResponse = await fetch(`${BACKEND_URL}/total-reviewed-properties${queryString ? '?' + queryString : ''}`);
+        const propertiesResponse = await fetch(
+          `${BACKEND_URL}/total-reviewed-properties${queryString ? '?' + queryString : ''}`
+        );
         if (!propertiesResponse.ok) {
           throw new Error('Failed to fetch total reviewed properties');
         }
-        const propertiesData: TotalReviewedPropertiesData = await propertiesResponse.json();
+        const propertiesData: TotalReviewedPropertiesData =
+          await propertiesResponse.json();
         setTotalReviewedProperties(propertiesData.totalReviewedProperties);
 
         // Fetch total reviews with date filter
-        const reviewsResponse = await fetch(`${BACKEND_URL}/total-reviews-filtered${queryString ? '?' + queryString : ''}`);
+        const reviewsResponse = await fetch(
+          `${BACKEND_URL}/total-reviews-filtered${queryString ? '?' + queryString : ''}`
+        );
         if (!reviewsResponse.ok) {
           throw new Error('Failed to fetch total reviews');
         }
@@ -103,13 +128,14 @@ const SummarySection: React.FC = () => {
         setTotalReviews(reviewsData.totalReviews);
 
         // Fetch reviews for categories
-        const reviewsFetchResponse = await fetch(`${BACKEND_URL}/review-categories`);
+        const reviewsFetchResponse = await fetch(
+          `${BACKEND_URL}/review-categories`
+        );
         if (!reviewsFetchResponse.ok) {
           throw new Error('Failed to fetch review categories');
         }
         const barData = await reviewsFetchResponse.json();
         setBarData(barData);
-
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
@@ -130,7 +156,10 @@ const SummarySection: React.FC = () => {
       <h2 className="text-2xl font-bold mb-4">Review Summary</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {/* Average Rating Card */}
-        <div className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setSelectedMetric('averageRating')}>
+        <div
+          className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => setSelectedMetric('averageRating')}
+        >
           <h3 className="text-lg font-semibold mb-2">Average Rating</h3>
           {loading ? (
             <p className="text-gray-500">Loading...</p>
@@ -146,19 +175,29 @@ const SummarySection: React.FC = () => {
           )}
         </div>
         {/* Placeholder for other cards */}
-        <div className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setSelectedMetric('totalReviewedProperties')}>
-          <h3 className="text-lg font-semibold mb-2">Total Reviewed Properties</h3>
+        <div
+          className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => setSelectedMetric('totalReviewedProperties')}
+        >
+          <h3 className="text-lg font-semibold mb-2">
+            Total Reviewed Properties
+          </h3>
           {loading ? (
             <p className="text-gray-500">Loading...</p>
           ) : error ? (
             <p className="text-red-500">{error}</p>
           ) : (
             <p className="text-3xl font-bold text-blue-500">
-              {totalReviewedProperties !== null ? totalReviewedProperties : 'N/A'}
+              {totalReviewedProperties !== null
+                ? totalReviewedProperties
+                : 'N/A'}
             </p>
           )}
         </div>
-        <div className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow" onClick={() => setSelectedMetric('totalReviews')}>
+        <div
+          className="bg-white rounded-lg shadow-md p-6 cursor-pointer hover:shadow-lg transition-shadow"
+          onClick={() => setSelectedMetric('totalReviews')}
+        >
           <h3 className="text-lg font-semibold mb-2">Total Reviews</h3>
           {loading ? (
             <p className="text-gray-500">Loading...</p>
@@ -176,7 +215,12 @@ const SummarySection: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div>
               <h4 className="text-lg font-semibold mb-2">
-                Monthly {selectedMetric === 'averageRating' ? 'Average Rating' : selectedMetric === 'totalReviewedProperties' ? 'Total Reviewed Properties' : 'Total Reviews'}
+                Monthly{' '}
+                {selectedMetric === 'averageRating'
+                  ? 'Average Rating'
+                  : selectedMetric === 'totalReviewedProperties'
+                    ? 'Total Reviewed Properties'
+                    : 'Total Reviews'}
               </h4>
               <ResponsiveContainer width="100%" height={300}>
                 <LineChart data={chartData}>
@@ -184,7 +228,12 @@ const SummarySection: React.FC = () => {
                   <XAxis dataKey="month" />
                   <YAxis />
                   <Tooltip />
-                  <Line type="monotone" dataKey="value" stroke="#0a3c26" strokeWidth={2} />
+                  <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke="#0a3c26"
+                    strokeWidth={2}
+                  />
                 </LineChart>
               </ResponsiveContainer>
             </div>

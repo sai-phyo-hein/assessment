@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import ItemCard from './item-card';
 import SpiderPlot from './spider-plot';
 import { useAppStore } from '../global-store';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts';
 
 interface Property {
   name: string;
@@ -32,15 +39,19 @@ const DetailSection: React.FC<DetailSectionProps> = ({ type, properties }) => {
   useEffect(() => {
     const fetchPropertyData = async () => {
       if (!dbSelectedProperty) return;
-      
+
       setLoading(true);
       try {
-        const response = await fetch(`${BACKEND_URL}/property-monthly-rating/${dbSelectedProperty.id}`);
+        const response = await fetch(
+          `${BACKEND_URL}/property-monthly-rating/${dbSelectedProperty.id}`
+        );
         if (response.ok) {
           const data = await response.json();
           setChartData(data.monthlyRating || []);
         }
-        const reviewResponse = await fetch(`${BACKEND_URL}/reviews?propertyId=${dbSelectedProperty.id}`);
+        const reviewResponse = await fetch(
+          `${BACKEND_URL}/reviews?propertyId=${dbSelectedProperty.id}`
+        );
         if (reviewResponse.ok) {
           const reviewData = await reviewResponse.json();
           setReviews(reviewData);
@@ -56,13 +67,15 @@ const DetailSection: React.FC<DetailSectionProps> = ({ type, properties }) => {
   }, [dbSelectedProperty]);
 
   const handleApprove = async (reviewId: number) => {
-    const review = reviews.find(r => r.id === reviewId);
+    const review = reviews.find((r) => r.id === reviewId);
     if (!review) return;
-    console.log("REviews:", reviews);
+    console.log('REviews:', reviews);
     const newApproved = !review.approved;
 
     // Optimistically update local state
-    setReviews(prev => prev.map(r => r.id === reviewId ? { ...r, approved: newApproved } : r));
+    setReviews((prev) =>
+      prev.map((r) => (r.id === reviewId ? { ...r, approved: newApproved } : r))
+    );
 
     try {
       const response = await fetch(`${BACKEND_URL}/reviews/${reviewId}`, {
@@ -79,7 +92,11 @@ const DetailSection: React.FC<DetailSectionProps> = ({ type, properties }) => {
     } catch (error) {
       console.error('Error updating review approval:', error);
       // Revert local state on error
-      setReviews(prev => prev.map(r => r.id === reviewId ? { ...r, approved: !newApproved } : r));
+      setReviews((prev) =>
+        prev.map((r) =>
+          r.id === reviewId ? { ...r, approved: !newApproved } : r
+        )
+      );
     }
   };
 
@@ -88,18 +105,50 @@ const DetailSection: React.FC<DetailSectionProps> = ({ type, properties }) => {
       {/* Header and Quick Insights - Horizontal Layout */}
       <div className="flex justify-between items-center mb-3">
         <h4 className="text-lg font-semibold text-gray-800">
-          {type === 'high-values' ? 'High Value Properties' : 'Properties Needing Attention'}
+          {type === 'high-values'
+            ? 'High Value Properties'
+            : 'Properties Needing Attention'}
         </h4>
 
         {/* Quick Insights - Horizontal */}
         <div className="bg-blue-50 px-4 py-2 rounded-lg">
           <div className="flex items-center space-x-8 text-sm text-gray-600">
-            <span>• Properties in London: <span className="italic text-flex-green">{properties.filter(p => p.location === 'London').length}</span></span>
-            <span>• 1-Bedroom: <span className="italic text-flex-green">{properties.filter(p => p.bedrooms === 1).length}</span></span>
-            <span>• 2-Bedroom: <span className="italic text-flex-green">{properties.filter(p => p.bedrooms === 2).length}</span></span>
-            <span>• 3-Bedroom: <span className="italic text-flex-green">{properties.filter(p => p.bedrooms === 3).length}</span></span>
-            <span>• &gt;3 Bedroom: <span className="italic text-flex-green">{properties.filter(p => p.bedrooms > 3).length}</span></span>
-            <span>• Max capacity ≥ 4: <span className="italic text-flex-green">{properties.filter(p => p.max_guests >= 4).length}</span></span>
+            <span>
+              • Properties in London:{' '}
+              <span className="italic text-flex-green">
+                {properties.filter((p) => p.location === 'London').length}
+              </span>
+            </span>
+            <span>
+              • 1-Bedroom:{' '}
+              <span className="italic text-flex-green">
+                {properties.filter((p) => p.bedrooms === 1).length}
+              </span>
+            </span>
+            <span>
+              • 2-Bedroom:{' '}
+              <span className="italic text-flex-green">
+                {properties.filter((p) => p.bedrooms === 2).length}
+              </span>
+            </span>
+            <span>
+              • 3-Bedroom:{' '}
+              <span className="italic text-flex-green">
+                {properties.filter((p) => p.bedrooms === 3).length}
+              </span>
+            </span>
+            <span>
+              • &gt;3 Bedroom:{' '}
+              <span className="italic text-flex-green">
+                {properties.filter((p) => p.bedrooms > 3).length}
+              </span>
+            </span>
+            <span>
+              • Max capacity ≥ 4:{' '}
+              <span className="italic text-flex-green">
+                {properties.filter((p) => p.max_guests >= 4).length}
+              </span>
+            </span>
           </div>
         </div>
       </div>
@@ -128,16 +177,27 @@ const DetailSection: React.FC<DetailSectionProps> = ({ type, properties }) => {
           {/* Row 1, Col 1 */}
           <div className="col-span-1 row-span-1">
             {dbSelectedProperty && (
-              <div className="bg-gray-50 p-4 rounded-lg shadow-sm text-xs" style={{ height: 200 }}>
+              <div
+                className="bg-gray-50 p-4 rounded-lg shadow-sm text-xs"
+                style={{ height: 200 }}
+              >
                 {loading ? (
                   <p className="text-gray-500">Loading...</p>
                 ) : chartData.length > 0 ? (
                   <ResponsiveContainer width="100%" height={200}>
-                    <LineChart data={chartData} margin={{ top: 20, right: 30, bottom: 20, left: 20 }}>
+                    <LineChart
+                      data={chartData}
+                      margin={{ top: 20, right: 30, bottom: 20, left: 20 }}
+                    >
                       <XAxis dataKey="month" />
                       <YAxis domain={[0, 10]} axisLine={false} />
                       <Tooltip />
-                      <Line type="monotone" dataKey="averageRating" stroke="#0a3c26" strokeWidth={2} />
+                      <Line
+                        type="monotone"
+                        dataKey="averageRating"
+                        stroke="#0a3c26"
+                        strokeWidth={2}
+                      />
                     </LineChart>
                   </ResponsiveContainer>
                 ) : (
@@ -158,15 +218,19 @@ const DetailSection: React.FC<DetailSectionProps> = ({ type, properties }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {reviews.map(review => (
+                  {reviews.map((review) => (
                     <tr key={review.id}>
-                      <td className="text-sm px-4 py-2">{review.publicReview}</td>
                       <td className="text-sm px-4 py-2">
-                        <input 
-                          type="checkbox" 
-                          checked={review.approved} 
-                          disabled={type === 'need-attention' && !review.approved}
-                          onChange={() => handleApprove(review.id)} 
+                        {review.publicReview}
+                      </td>
+                      <td className="text-sm px-4 py-2">
+                        <input
+                          type="checkbox"
+                          checked={review.approved}
+                          disabled={
+                            type === 'need-attention' && !review.approved
+                          }
+                          onChange={() => handleApprove(review.id)}
                         />
                       </td>
                     </tr>

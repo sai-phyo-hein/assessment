@@ -3023,5 +3023,24 @@
         "externalReviewId": "EXT-106",
         "externalReservationId": "RES-106",
         "approved": true
+    },
+    {
+        "guestName": "Hein",
+        "publicReview": "Nice Environment",
+        "rating": 10,
+        "reviewCategory": [
+            "environment"
+        ],
+        "propertyId": 0,
+        "departureDate": "2025-09-11 12:26:38",
+        "id": 107,
+        "accountId": 1,
+        "listingMapId": 1,
+        "channelId": 2005,
+        "type": "guest-to-host",
+        "status": "completed",
+        "isCancelled": 0,
+        "externalReviewId": "EXT-107",
+        "externalReservationId": "RES-107"
     }
 ]

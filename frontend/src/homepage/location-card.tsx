@@ -27,8 +27,8 @@ const LocationCard: React.FC<LocationCardProps> = ({
     <div className="flex flex-col items-center gap-4">
       <div
         className={`w-full aspect-square bg-gray-100 rounded-3xl overflow-hidden flex items-center justify-center transition-transform duration-300 ease-in-out ${
-          hoveredIndex === index 
-            ? 'scale-105 z-10 cursor-pointer' 
+          hoveredIndex === index
+            ? 'scale-105 z-10 cursor-pointer'
             : 'scale-100 z-[1] cursor-default'
         }`}
         onMouseEnter={() => setHoveredIndex(index)}
@@ -43,9 +43,7 @@ const LocationCard: React.FC<LocationCardProps> = ({
           }`}
         />
       </div>
-      <div className="text-lg text-gray-800 text-center">
-        {cityName}
-      </div>
+      <div className="text-lg text-gray-800 text-center">{cityName}</div>
     </div>
   );
 };

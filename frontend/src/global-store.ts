@@ -1,4 +1,3 @@
-
 export interface Property {
   id: number;
   name: string;
@@ -36,11 +35,17 @@ interface AppState {
   // Date filtering for dashboard
   startDate?: Date | null | undefined;
   endDate?: Date | null | undefined;
-  setDashboardDateRange?: (startDate: Date | null | undefined, endDate: Date | null | undefined) => void;
+  setDashboardDateRange?: (
+    startDate: Date | null | undefined,
+    endDate: Date | null | undefined
+  ) => void;
   // Date range constraints from reviews
   minDate?: Date | null | undefined;
   maxDate?: Date | null | undefined;
-  setDateRangeConstraints?: (minDate: Date | null | undefined, maxDate: Date | null | undefined) => void;
+  setDateRangeConstraints?: (
+    minDate: Date | null | undefined,
+    maxDate: Date | null | undefined
+  ) => void;
   // Dashboard view toggle
   isSummaryView: boolean;
   setIsSummaryView: (isSummary: boolean) => void;

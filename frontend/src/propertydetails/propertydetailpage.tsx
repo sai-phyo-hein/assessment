@@ -10,12 +10,16 @@ interface PropertyDetailPageProps {
   folderId: string;
 }
 
-const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ folderId }) => {
+const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({
+  folderId,
+}) => {
   const [images, setImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const selectedProperty = useAppStore((state) => state.selectedProperty);
-  const setShowPropertyDetailPage = useAppStore((state) => state.setShowPropertyDetailPage);
+  const setShowPropertyDetailPage = useAppStore(
+    (state) => state.setShowPropertyDetailPage
+  );
   const setShowPropertyPage = useAppStore((state) => state.setShowPropertyPage);
 
   const handleBackToPropertyPage = () => {
@@ -27,15 +31,15 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ folderId }) => 
     const fetchImages = async () => {
       try {
         const res = await fetch(`${BACKEND_URL}/images/${folderId}`);
-        if (!res.ok) throw new Error("Failed to fetch image list");
+        if (!res.ok) throw new Error('Failed to fetch image list');
         const data = await res.json();
-        if (!data.images) throw new Error("No images found");
+        if (!data.images) throw new Error('No images found');
         const imgs: Image[] = data.images.map((filename: string) => {
-          let type = "other";
-          if (filename.includes("bathroom")) type = "bathroom";
-          else if (filename.includes("bedroom")) type = "bedroom";
-          else if (filename.includes("kitchen")) type = "kitchen";
-          else if (filename.includes("frontal")) type = "main";
+          let type = 'other';
+          if (filename.includes('bathroom')) type = 'bathroom';
+          else if (filename.includes('bedroom')) type = 'bedroom';
+          else if (filename.includes('kitchen')) type = 'kitchen';
+          else if (filename.includes('frontal')) type = 'main';
           return {
             src: `${BACKEND_URL}/images/${folderId}/${filename}`,
             alt: filename,
@@ -64,7 +68,7 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ folderId }) => 
           <span>Back to Properties</span>
         </button>
       </div>
-      
+
       {loading && <div>Loading images...</div>}
       {error && <div className="text-red-500">{error}</div>}
       {!loading && !error && <Gallery images={images} />}
@@ -79,19 +83,31 @@ const PropertyDetailPage: React.FC<PropertyDetailPageProps> = ({ folderId }) => 
             <div className="flex items-center gap-16 text-sm text-gray-700">
               <div className="flex items-center gap-3 mb-5">
                 <Users className="w-5 h-5" />
-                <span className="text-center">{selectedProperty.max_guests} <br/>guests</span>
+                <span className="text-center">
+                  {selectedProperty.max_guests} <br />
+                  guests
+                </span>
               </div>
               <div className="flex items-center gap-3 mb-5">
                 <Bed className="w-5 h-5" />
-                <span className="text-center">{selectedProperty.bedrooms} <br/>Bedroom{selectedProperty.bedrooms > 1 ? 's' : ''}</span>
+                <span className="text-center">
+                  {selectedProperty.bedrooms} <br />
+                  Bedroom{selectedProperty.bedrooms > 1 ? 's' : ''}
+                </span>
               </div>
               <div className="flex items-center gap-3 mb-5">
                 <Bath className="w-5 h-5" />
-                <span className="text-center">{selectedProperty.bathrooms} <br/>Bathroom{selectedProperty.bathrooms > 1 ? 's' : ''}</span>
+                <span className="text-center">
+                  {selectedProperty.bathrooms} <br />
+                  Bathroom{selectedProperty.bathrooms > 1 ? 's' : ''}
+                </span>
               </div>
               <div className="flex items-center gap-3 mb-5">
                 <Bath className="w-5 h-5" />
-                <span className="text-center">{selectedProperty.beds} <br/>Bed{selectedProperty.beds > 1 ? 's' : ''}</span>
+                <span className="text-center">
+                  {selectedProperty.beds} <br />
+                  Bed{selectedProperty.beds > 1 ? 's' : ''}
+                </span>
               </div>
             </div>
           </div>

@@ -10,18 +10,23 @@ interface PropertyCardProps {
   imageUrl?: string;
 }
 
-const PropertyCard: React.FC<PropertyCardProps> = ({ 
-  property, 
-  imageUrl = `${BACKEND_URL}/images/${property.id}/` + `${100 + property.id}_frontal.jpg`  // Dynamic image URL from backend
+const PropertyCard: React.FC<PropertyCardProps> = ({
+  property,
+  imageUrl = `${BACKEND_URL}/images/${property.id}/` +
+    `${100 + property.id}_frontal.jpg`, // Dynamic image URL from backend
 }) => {
-  const { setShowPropertyDetailPage, setShowPropertyPage, setPageId, setSelectedProperty } = useAppStore();
+  const {
+    setShowPropertyDetailPage,
+    setShowPropertyPage,
+    setPageId,
+    setSelectedProperty,
+  } = useAppStore();
 
   const handleClick = () => {
     setShowPropertyDetailPage(true);
     setShowPropertyPage(false);
     if (setPageId) {
       setPageId(property.id.toString());
-      
     }
     if (setSelectedProperty) {
       setSelectedProperty(property);
@@ -29,14 +34,14 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
   };
 
   return (
-    <div 
+    <div
       className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer transition-shadow duration-300 hover:shadow-lg"
       onClick={handleClick}
     >
       {/* Image Section */}
       <div className="relative h-64 overflow-hidden">
-        <img 
-          src={imageUrl} 
+        <img
+          src={imageUrl}
           alt={property.name}
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
         />
@@ -45,9 +50,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
           <div className="text-lg font-bold text-gray-900">
             £{property.per_night_price}
           </div>
-          <div className="text-sm text-gray-500">
-            per night
-          </div>
+          <div className="text-sm text-gray-500">per night</div>
         </div>
       </div>
 
@@ -57,24 +60,26 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
         <h3 className="text-xl font-semibold text-gray-900 mb-2">
           {property.name}
         </h3>
-        
+
         {/* Location */}
-        <p className="text-gray-500 mb-4">
-          {property.location}
-        </p>
+        <p className="text-gray-500 mb-4">{property.location}</p>
 
         {/* Property Details */}
         <div className="flex items-center gap-2 text-xs text-gray-700">
           <div className="flex items-center gap-1">
             <Bed className="w-4 h-4" />
-            <span>{property.bedrooms} Bedroom{property.bedrooms > 1 ? 's' : ''}</span>
+            <span>
+              {property.bedrooms} Bedroom{property.bedrooms > 1 ? 's' : ''}
+            </span>
           </div>
-          
+
           <div className="flex items-center gap-1">
             <Bath className="w-4 h-4" />
-            <span>{property.bathrooms} Bathroom{property.bathrooms > 1 ? 's' : ''}</span>
+            <span>
+              {property.bathrooms} Bathroom{property.bathrooms > 1 ? 's' : ''}
+            </span>
           </div>
-          
+
           <div className="flex items-center gap-1">
             <Users className="w-4 h-4" />
             <span>Up to {property.max_guests} guests</span>
@@ -84,6 +89,5 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
     </div>
   );
 };
-
 
 export default PropertyCard;

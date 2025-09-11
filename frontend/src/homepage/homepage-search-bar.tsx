@@ -1,6 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { MapPin, Plus, Minus, Calendar, ChevronLeft, ChevronRight, User2 } from 'lucide-react';
+import {
+  MapPin,
+  Plus,
+  Minus,
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+  User2,
+} from 'lucide-react';
 import Dropdown from '../components/dropdown';
 
 interface SearchBarProps {
@@ -15,9 +23,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
   const [guests, setGuests] = useState(1);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [currentMonthLeft, setCurrentMonthLeft] = useState(new Date());
-  const [currentMonthRight, setCurrentMonthRight] = useState(new Date(new Date().setMonth(new Date().getMonth() + 1)));
+  const [currentMonthRight, setCurrentMonthRight] = useState(
+    new Date(new Date().setMonth(new Date().getMonth() + 1))
+  );
   const [isDatePickerAbove, setIsDatePickerAbove] = useState(false);
-  const [datePickerPosition, setDatePickerPosition] = useState({ top: 0, left: 0 });
+  const [datePickerPosition, setDatePickerPosition] = useState({
+    top: 0,
+    left: 0,
+  });
   const datePickerRef = useRef<HTMLDivElement>(null);
   const dateButtonRef = useRef<HTMLButtonElement>(null);
   const [selectingCheckIn, setSelectingCheckIn] = useState(true);
@@ -34,33 +47,36 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
 
   const formatDateDisplay = () => {
     if (checkInDate && checkOutDate) {
-      const checkIn = checkInDate.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric' 
+      const checkIn = checkInDate.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
       });
-      const checkOut = checkOutDate.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric' 
+      const checkOut = checkOutDate.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
       });
       return `${checkIn} - ${checkOut}`;
     } else if (checkInDate) {
-      return `${checkInDate.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric' 
+      return `${checkInDate.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
       })} - Select end`;
     }
     return 'Dates';
   };
 
-  const navigateMonth = (direction: 'prev' | 'next', calendar: 'left' | 'right') => {
+  const navigateMonth = (
+    direction: 'prev' | 'next',
+    calendar: 'left' | 'right'
+  ) => {
     if (calendar === 'left') {
-      setCurrentMonthLeft(prev => {
+      setCurrentMonthLeft((prev) => {
         const newMonth = new Date(prev);
         newMonth.setMonth(prev.getMonth() + (direction === 'prev' ? -1 : 1));
         return newMonth;
       });
     } else {
-      setCurrentMonthRight(prev => {
+      setCurrentMonthRight((prev) => {
         const newMonth = new Date(prev);
         newMonth.setMonth(prev.getMonth() + (direction === 'prev' ? -1 : 1));
         return newMonth;
@@ -95,18 +111,30 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
     let current = new Date(startDate);
     while (current <= endDate) {
       const isCurrentMonth = current.getMonth() === month.getMonth();
-      const isSelected = (selectingCheckIn && checkInDate && current.toDateString() === checkInDate.toDateString()) ||
-                        (!selectingCheckIn && checkOutDate && current.toDateString() === checkOutDate.toDateString());
-      const isInRange = checkInDate && checkOutDate && current >= checkInDate && current <= checkOutDate;
+      const isSelected =
+        (selectingCheckIn &&
+          checkInDate &&
+          current.toDateString() === checkInDate.toDateString()) ||
+        (!selectingCheckIn &&
+          checkOutDate &&
+          current.toDateString() === checkOutDate.toDateString());
+      const isInRange =
+        checkInDate &&
+        checkOutDate &&
+        current >= checkInDate &&
+        current <= checkOutDate;
       days.push(
         <button
           key={current.toISOString()}
           onClick={() => handleDateSelect(new Date(current))}
           className={`w-10 h-8 flex items-center justify-center text-sm rounded-lg transition-colors ${
-            !isCurrentMonth ? 'text-gray-300' :
-            isSelected ? 'bg-emerald-600 text-white' :
-            isInRange ? 'bg-emerald-100' :
-            'hover:bg-gray-100'
+            !isCurrentMonth
+              ? 'text-gray-300'
+              : isSelected
+                ? 'bg-emerald-600 text-white'
+                : isInRange
+                  ? 'bg-emerald-100'
+                  : 'hover:bg-gray-100'
           }`}
           disabled={!isCurrentMonth}
         >
@@ -120,7 +148,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (datePickerRef.current && !datePickerRef.current.contains(event.target as Node)) {
+      if (
+        datePickerRef.current &&
+        !datePickerRef.current.contains(event.target as Node)
+      ) {
         setShowDatePicker(false);
       }
     };
@@ -131,7 +162,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
         const windowHeight = window.innerHeight;
         const datePickerHeight = 400; // Approximate height of date picker
         const spaceBelow = windowHeight - rect.bottom;
-        const isAbove = spaceBelow < datePickerHeight && rect.top > datePickerHeight;
+        const isAbove =
+          spaceBelow < datePickerHeight && rect.top > datePickerHeight;
         setIsDatePickerAbove(isAbove);
         setDatePickerPosition({
           top: isAbove ? rect.top - datePickerHeight : rect.bottom,
@@ -174,9 +206,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
               <ChevronLeft size={16} />
             </button>
             <h3 className="font-medium text-gray-900">
-              {currentMonthLeft.toLocaleDateString('en-US', { 
-                month: 'long', 
-                year: 'numeric' 
+              {currentMonthLeft.toLocaleDateString('en-US', {
+                month: 'long',
+                year: 'numeric',
               })}
             </h3>
             <button
@@ -188,7 +220,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
           </div>
           <div className="grid grid-cols-7 gap-1 mb-2">
             {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-              <div key={day} className="w-10 h-8 flex items-center justify-center text-xs font-medium text-gray-500">
+              <div
+                key={day}
+                className="w-10 h-8 flex items-center justify-center text-xs font-medium text-gray-500"
+              >
                 {day}
               </div>
             ))}
@@ -207,9 +242,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
               <ChevronLeft size={16} />
             </button>
             <h3 className="font-medium text-gray-900">
-              {currentMonthRight.toLocaleDateString('en-US', { 
-                month: 'long', 
-                year: 'numeric' 
+              {currentMonthRight.toLocaleDateString('en-US', {
+                month: 'long',
+                year: 'numeric',
               })}
             </h3>
             <button
@@ -221,7 +256,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
           </div>
           <div className="grid grid-cols-7 gap-1 mb-2">
             {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-              <div key={day} className="w-10 h-8 flex items-center justify-center text-xs font-medium text-gray-500">
+              <div
+                key={day}
+                className="w-10 h-8 flex items-center justify-center text-xs font-medium text-gray-500"
+              >
                 {day}
               </div>
             ))}
@@ -236,12 +274,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
         <div className="flex gap-4">
           <button
             onClick={() => {
-              setCurrentMonthLeft(prev => {
+              setCurrentMonthLeft((prev) => {
                 const newMonth = new Date(prev);
                 newMonth.setMonth(prev.getMonth() - 1);
                 return newMonth;
               });
-              setCurrentMonthRight(prev => {
+              setCurrentMonthRight((prev) => {
                 const newMonth = new Date(prev);
                 newMonth.setMonth(prev.getMonth() - 1);
                 return newMonth;
@@ -253,12 +291,12 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
           </button>
           <button
             onClick={() => {
-              setCurrentMonthLeft(prev => {
+              setCurrentMonthLeft((prev) => {
                 const newMonth = new Date(prev);
                 newMonth.setMonth(prev.getMonth() + 1);
                 return newMonth;
               });
-              setCurrentMonthRight(prev => {
+              setCurrentMonthRight((prev) => {
                 const newMonth = new Date(prev);
                 newMonth.setMonth(prev.getMonth() + 1);
                 return newMonth;
@@ -271,7 +309,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
         </div>
         <div className="flex items-center gap-4 text-sm text-gray-600">
           <span>
-            {selectingCheckIn ? 'Select check-in date' : 'Select check-out date'}
+            {selectingCheckIn
+              ? 'Select check-in date'
+              : 'Select check-out date'}
           </span>
           {checkInDate && checkOutDate && (
             <button
@@ -328,7 +368,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
             <Calendar size={30} className="mr-2 text-gray-500" />
             {formatDateDisplay()}
           </button>
-          
+
           {showDatePicker && createPortal(<DatePickerContent />, document.body)}
         </div>
 
@@ -336,17 +376,17 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '' }) => {
           <div className="flex items-center justify-between p-3 rounded-md bg-vanilla">
             <button
               onClick={() => handleGuestChange(false)}
-              className='hover:border-transparent'
+              className="hover:border-transparent"
               disabled={guests <= 1}
             >
               <Minus size={16} />
             </button>
             <span className="text-sm font-medium text-gray-900 flex items-center gap-2">
-              <User2 size={30}/> {guests} {guests === 1 ? 'Guest' : 'Guests'}
+              <User2 size={30} /> {guests} {guests === 1 ? 'Guest' : 'Guests'}
             </span>
             <button
               onClick={() => handleGuestChange(true)}
-              className='hover:border-transparent'
+              className="hover:border-transparent"
               disabled={guests >= 10}
             >
               <Plus size={16} />

@@ -17,9 +17,15 @@ interface Property {
 const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 const ReviewDetails: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'high-values' | 'need-attention'>('high-values');
-  const [highValueProperties, setHighValueProperties] = useState<Property[]>([]);
-  const [needAttentionProperties, setNeedAttentionProperties] = useState<Property[]>([]);
+  const [activeTab, setActiveTab] = useState<'high-values' | 'need-attention'>(
+    'high-values'
+  );
+  const [highValueProperties, setHighValueProperties] = useState<Property[]>(
+    []
+  );
+  const [needAttentionProperties, setNeedAttentionProperties] = useState<
+    Property[]
+  >([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -31,7 +37,9 @@ const ReviewDetails: React.FC = () => {
         setLoading(true);
 
         // Fetch property performance data from backend
-        const performanceResponse = await fetch(`${BACKEND_URL}/property-performance`);
+        const performanceResponse = await fetch(
+          `${BACKEND_URL}/property-performance`
+        );
         if (!performanceResponse.ok) {
           throw new Error('Failed to fetch property performance data');
         }
@@ -39,7 +47,6 @@ const ReviewDetails: React.FC = () => {
 
         setHighValueProperties(performanceData.highValue);
         setNeedAttentionProperties(performanceData.needAttention);
-
       } catch (err: any) {
         setError(err.message);
       } finally {
@@ -52,15 +59,25 @@ const ReviewDetails: React.FC = () => {
 
   useEffect(() => {
     if (setDbSelectedProperty) {
-      const properties = activeTab === 'high-values' ? highValueProperties : needAttentionProperties;
+      const properties =
+        activeTab === 'high-values'
+          ? highValueProperties
+          : needAttentionProperties;
       setDbSelectedProperty(properties.length > 0 ? properties[0] : undefined);
     }
-  }, [activeTab, highValueProperties, needAttentionProperties, setDbSelectedProperty]);
+  }, [
+    activeTab,
+    highValueProperties,
+    needAttentionProperties,
+    setDbSelectedProperty,
+  ]);
 
   if (loading) {
     return (
       <div className="pt-4">
-        <div className="text-center text-gray-500 py-8">Loading property data...</div>
+        <div className="text-center text-gray-500 py-8">
+          Loading property data...
+        </div>
       </div>
     );
   }
@@ -75,7 +92,6 @@ const ReviewDetails: React.FC = () => {
 
   return (
     <div className="pt-4">
-
       {/* Tab Navigation */}
       <div className="flex mt-[-2rem]">
         <button
@@ -104,13 +120,19 @@ const ReviewDetails: React.FC = () => {
       <div className="min-h-[400px] border border-gray-200 border-t-0 rounded-b-lg overflow-hidden">
         {activeTab === 'high-values' && (
           <div className="bg-vanilla p-3 space-y-4">
-            <DetailSection type="high-values" properties={highValueProperties} />
+            <DetailSection
+              type="high-values"
+              properties={highValueProperties}
+            />
           </div>
         )}
 
         {activeTab === 'need-attention' && (
           <div className="bg-vanilla p-3 space-y-4">
-            <DetailSection type="need-attention" properties={needAttentionProperties} />
+            <DetailSection
+              type="need-attention"
+              properties={needAttentionProperties}
+            />
           </div>
         )}
       </div>

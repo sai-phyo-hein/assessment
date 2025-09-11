@@ -13,10 +13,23 @@ interface SearchBarProps {
   scrolled?: boolean;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled = false }) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  style,
+  className = '',
+  scrolled = false,
+}) => {
   const [selectedCity, setSelectedCity] = useState('City');
   const [isCalendarsOpen, setIsCalendarsOpen] = useState(false);
-  const { startDate, endDate, setDashboardDateRange, minDate, maxDate, setDateRangeConstraints, isSummaryView, setIsSummaryView } = useAppStore();
+  const {
+    startDate,
+    endDate,
+    setDashboardDateRange,
+    minDate,
+    maxDate,
+    setDateRangeConstraints,
+    isSummaryView,
+    setIsSummaryView,
+  } = useAppStore();
   const startDatePickerRef = useRef<any>(null);
   const endDatePickerRef = useRef<any>(null);
   const calendarContainerRef = useRef<HTMLDivElement>(null);
@@ -44,7 +57,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled =
     fetchDateRange();
   }, [setDateRangeConstraints]);
 
-  const formatDateDisplay = (date: Date | null | undefined, placeholder: string) => {
+  const formatDateDisplay = (
+    date: Date | null | undefined,
+    placeholder: string
+  ) => {
     if (date) {
       return date.toLocaleDateString('en-US', {
         month: 'short',
@@ -69,7 +85,11 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled =
 
   // Adjust calendar position to stay within viewport
   useEffect(() => {
-    if (isCalendarsOpen && calendarContainerRef.current && toggleButtonRef.current) {
+    if (
+      isCalendarsOpen &&
+      calendarContainerRef.current &&
+      toggleButtonRef.current
+    ) {
       const adjustPosition = () => {
         const container = calendarContainerRef.current;
         const button = toggleButtonRef.current;
@@ -141,7 +161,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled =
 
     if (isCalendarsOpen) {
       document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
+      return () =>
+        document.removeEventListener('mousedown', handleClickOutside);
     }
   }, [isCalendarsOpen]);
 
@@ -169,7 +190,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled =
             scrolled={scrolled}
             defaultLabel={
               <div className="flex items-center">
-                <MapPin size={14} className={`mr-2 ${scrolled ? 'text-white' : 'text-gray-500'}`} />
+                <MapPin
+                  size={14}
+                  className={`mr-2 ${scrolled ? 'text-white' : 'text-gray-500'}`}
+                />
                 City
               </div>
             }
@@ -185,7 +209,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled =
           >
             {/* Start Date */}
             <div className="flex items-center">
-              <Calendar size={14} className={`mr-2 ${scrolled ? 'text-white' : 'text-gray-500'}`} />
+              <Calendar
+                size={14}
+                className={`mr-2 ${scrolled ? 'text-white' : 'text-gray-500'}`}
+              />
               <span className={scrolled ? 'text-white' : 'text-gray-700'}>
                 {formatDateDisplay(startDate, 'Start date')}
               </span>
@@ -196,7 +223,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled =
 
             {/* End Date */}
             <div className="flex items-center">
-              <Calendar size={14} className={`mr-2 ${scrolled ? 'text-white' : 'text-gray-500'}`} />
+              <Calendar
+                size={14}
+                className={`mr-2 ${scrolled ? 'text-white' : 'text-gray-500'}`}
+              />
               <span className={scrolled ? 'text-white' : 'text-gray-700'}>
                 {formatDateDisplay(endDate, 'End date')}
               </span>
@@ -204,9 +234,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled =
 
             {/* Toggle Icon */}
             {isCalendarsOpen ? (
-              <ChevronUp size={16} className={scrolled ? 'text-white' : 'text-gray-500'} />
+              <ChevronUp
+                size={16}
+                className={scrolled ? 'text-white' : 'text-gray-500'}
+              />
             ) : (
-              <ChevronDown size={16} className={scrolled ? 'text-white' : 'text-gray-500'} />
+              <ChevronDown
+                size={16}
+                className={scrolled ? 'text-white' : 'text-gray-500'}
+              />
             )}
           </button>
 
@@ -219,7 +255,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled =
               <div className="flex gap-6">
                 {/* Start Date Calendar */}
                 <div className="flex flex-col items-center">
-                  <h3 className={`text-sm font-medium mb-2 ${scrolled ? 'text-gray-900' : 'text-gray-700'}`}>
+                  <h3
+                    className={`text-sm font-medium mb-2 ${scrolled ? 'text-gray-900' : 'text-gray-700'}`}
+                  >
                     Start Date
                   </h3>
                   <DatePicker
@@ -235,7 +273,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled =
 
                 {/* End Date Calendar */}
                 <div className="flex flex-col items-center">
-                  <h3 className={`text-sm font-medium mb-2 ${scrolled ? 'text-gray-900' : 'text-gray-700'}`}>
+                  <h3
+                    className={`text-sm font-medium mb-2 ${scrolled ? 'text-gray-900' : 'text-gray-700'}`}
+                  >
                     End Date
                   </h3>
                   <DatePicker
@@ -254,7 +294,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled =
               <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200">
                 <button
                   className={`px-3 py-1.5 text-sm rounded transition-colors ${
-                    scrolled ? 'text-gray-300 hover:bg-gray-700' : 'text-gray-600 hover:bg-gray-100'
+                    scrolled
+                      ? 'text-gray-300 hover:bg-gray-700'
+                      : 'text-gray-600 hover:bg-gray-100'
                   }`}
                   onClick={() => {
                     setDashboardDateRange?.(null, null);
@@ -277,7 +319,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ style, className = '', scrolled =
         <div className="flex-none">
           <button
             className={`flex items-center justify-center text-center ml-6 gap-2 p-3 w-32 rounded-md outline-none text-sm bg-transparent transition-colors ${
-              scrolled ? 'text-white border-vanilla' : 'text-gray-700 border-flex-green'
+              scrolled
+                ? 'text-white border-vanilla'
+                : 'text-gray-700 border-flex-green'
             }`}
             onClick={() => setIsSummaryView(!isSummaryView)}
           >

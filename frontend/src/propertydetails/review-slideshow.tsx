@@ -14,13 +14,29 @@ interface Review {
 
 const BACKEND_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
-const categories = ['amenities', 'check-in', 'cleanliness', 'communication', 'environment', 'living', 'location', 'service', 'value'];
+const categories = [
+  'amenities',
+  'check-in',
+  'cleanliness',
+  'communication',
+  'environment',
+  'living',
+  'location',
+  'service',
+  'value',
+];
 
 const ReviewSlideShow: React.FC = () => {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [newReview, setNewReview] = useState({ guestName: '', publicReview: '', rating: 0, categories: [] as string[], departureDate: '' });
+  const [newReview, setNewReview] = useState({
+    guestName: '',
+    publicReview: '',
+    rating: 0,
+    categories: [] as string[],
+    departureDate: '',
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -28,10 +44,7 @@ const ReviewSlideShow: React.FC = () => {
   const selectedProperty = useAppStore((state) => state.selectedProperty);
   const [propertyId, setPropertyId] = useState<number | null>(null);
 
-  
-
   useEffect(() => {
-    
     // Update propertyId if selectedProperty?.id is not null or undefined
     if (selectedProperty?.id != null) {
       setPropertyId(selectedProperty.id);
@@ -52,19 +65,22 @@ const ReviewSlideShow: React.FC = () => {
         clearTimeout(timeoutId);
         if (!res.ok) {
           const errorText = await res.text();
-          throw new Error(`Failed to fetch reviews: ${res.status} ${errorText}`);
+          throw new Error(
+            `Failed to fetch reviews: ${res.status} ${errorText}`
+          );
         }
         const data = await res.json();
-        
+
         // Filter to only show approved reviews
-        const approvedReviews = data.filter((review: any) => review.approved === true);
+        const approvedReviews = data.filter(
+          (review: any) => review.approved === true
+        );
         setReviews(approvedReviews);
         setCurrentIndex(0);
       } catch (err: any) {
         console.error('Fetch Error:', err);
         setError(err.name === 'AbortError' ? 'Request timed out' : err.message);
       } finally {
-        
         setLoading(false);
       }
     };
@@ -80,22 +96,17 @@ const ReviewSlideShow: React.FC = () => {
   };
 
   const handleCategoryChange = (category: string, checked: boolean) => {
-    setNewReview(prev => ({
+    setNewReview((prev) => ({
       ...prev,
       categories: checked
         ? [...prev.categories, category]
-        : prev.categories.filter(c => c !== category)
+        : prev.categories.filter((c) => c !== category),
     }));
   };
 
   const handleReviewSubmit = async () => {
-    
-    
-    
-
     // Check for null or undefined
     if (propertyId == null) {
-      
       setError('No property selected');
       return;
     }
@@ -123,12 +134,18 @@ const ReviewSlideShow: React.FC = () => {
 
     // Generate current datetime in the required format
     const now = new Date();
-    const currentDateTime = now.getFullYear() + '-' + 
-                           String(now.getMonth() + 1).padStart(2, '0') + '-' + 
-                           String(now.getDate()).padStart(2, '0') + ' ' + 
-                           String(now.getHours()).padStart(2, '0') + ':' + 
-                           String(now.getMinutes()).padStart(2, '0') + ':' + 
-                           String(now.getSeconds()).padStart(2, '0');
+    const currentDateTime =
+      now.getFullYear() +
+      '-' +
+      String(now.getMonth() + 1).padStart(2, '0') +
+      '-' +
+      String(now.getDate()).padStart(2, '0') +
+      ' ' +
+      String(now.getHours()).padStart(2, '0') +
+      ':' +
+      String(now.getMinutes()).padStart(2, '0') +
+      ':' +
+      String(now.getSeconds()).padStart(2, '0');
 
     try {
       const response = await fetch(`${BACKEND_URL}/addreviews`, {
@@ -149,11 +166,19 @@ const ReviewSlideShow: React.FC = () => {
       if (!response.ok) {
         const errorText = await response.text();
         console.error('Backend error:', errorText);
-        throw new Error(`Failed to submit review: ${response.status} ${errorText}`);
+        throw new Error(
+          `Failed to submit review: ${response.status} ${errorText}`
+        );
       }
 
       // Reset form
-      setNewReview({ guestName: '', publicReview: '', rating: 0, categories: [], departureDate: '' });
+      setNewReview({
+        guestName: '',
+        publicReview: '',
+        rating: 0,
+        categories: [],
+        departureDate: '',
+      });
       setIsPopupOpen(false);
       setError(null); // Clear any previous errors
 
@@ -169,15 +194,21 @@ const ReviewSlideShow: React.FC = () => {
           clearTimeout(timeoutId);
           if (!res.ok) {
             const errorText = await res.text();
-            throw new Error(`Failed to fetch reviews: ${res.status} ${errorText}`);
+            throw new Error(
+              `Failed to fetch reviews: ${res.status} ${errorText}`
+            );
           }
           const data = await res.json();
           // Filter to only show approved reviews
-          const approvedReviews = data.filter((review: any) => review.approved === true);
+          const approvedReviews = data.filter(
+            (review: any) => review.approved === true
+          );
           setReviews(approvedReviews);
           setCurrentIndex(0);
         } catch (err: any) {
-          setError(err.name === 'AbortError' ? 'Request timed out' : err.message);
+          setError(
+            err.name === 'AbortError' ? 'Request timed out' : err.message
+          );
         } finally {
           setLoading(false);
         }
@@ -232,7 +263,10 @@ const ReviewSlideShow: React.FC = () => {
                       {reviews[currentIndex].guestName}
                       <span className="flex">
                         {Array.from({ length: 10 }).map((_, i) => (
-                          <Star key={i} filled={i < reviews[currentIndex].rating} />
+                          <Star
+                            key={i}
+                            filled={i < reviews[currentIndex].rating}
+                          />
                         ))}
                       </span>
                     </span>
@@ -292,8 +326,12 @@ const ReviewSlideShow: React.FC = () => {
                   ) : (
                     reviews.map((review) => (
                       <div key={review.id} className="mb-4">
-                        <p className="text-sm font-semibold">{review.guestName}</p>
-                        <p className="text-xs italic text-gray-600">"{review.publicReview}"</p>
+                        <p className="text-sm font-semibold">
+                          {review.guestName}
+                        </p>
+                        <p className="text-xs italic text-gray-600">
+                          "{review.publicReview}"
+                        </p>
                         <span className="flex">
                           {Array.from({ length: 10 }).map((_, i) => (
                             <Star key={i} filled={i < review.rating} />
@@ -311,40 +349,56 @@ const ReviewSlideShow: React.FC = () => {
                     {error}
                   </div>
                 )}
-                <label className="block text-sm font-medium mb-1">Your Name *</label>
+                <label className="block text-sm font-medium mb-1">
+                  Your Name *
+                </label>
                 <input
                   type="text"
                   placeholder="Enter your name"
                   value={newReview.guestName}
-                  onChange={(e) => setNewReview({ ...newReview, guestName: e.target.value })}
+                  onChange={(e) =>
+                    setNewReview({ ...newReview, guestName: e.target.value })
+                  }
                   className="w-full p-2 mb-2 border rounded"
                 />
-                <label className="block text-sm font-medium mb-1">Your Review *</label>
+                <label className="block text-sm font-medium mb-1">
+                  Your Review *
+                </label>
                 <textarea
                   placeholder="Share your experience"
                   value={newReview.publicReview}
-                  onChange={(e) => setNewReview({ ...newReview, publicReview: e.target.value })}
+                  onChange={(e) =>
+                    setNewReview({ ...newReview, publicReview: e.target.value })
+                  }
                   className="w-full p-2 mb-2 border rounded"
                 />
-                <label className="block text-sm font-medium mb-1">Rating *</label>
+                <label className="block text-sm font-medium mb-1">
+                  Rating *
+                </label>
                 <div className="flex mb-2">
                   {Array.from({ length: 10 }).map((_, i) => (
                     <Star
                       key={i}
                       filled={i < newReview.rating}
-                      onClick={() => setNewReview({ ...newReview, rating: i + 1 })}
+                      onClick={() =>
+                        setNewReview({ ...newReview, rating: i + 1 })
+                      }
                     />
                   ))}
                 </div>
                 <div className="mb-2">
-                  <label className="block text-sm font-medium mb-1">Categories *</label>
+                  <label className="block text-sm font-medium mb-1">
+                    Categories *
+                  </label>
                   <div className="grid grid-cols-2 gap-2">
                     {categories.map((cat) => (
                       <label key={cat} className="flex items-center">
                         <input
                           type="checkbox"
                           checked={newReview.categories.includes(cat)}
-                          onChange={(e) => handleCategoryChange(cat, e.target.checked)}
+                          onChange={(e) =>
+                            handleCategoryChange(cat, e.target.checked)
+                          }
                           className="mr-2"
                         />
                         {cat}
@@ -352,13 +406,6 @@ const ReviewSlideShow: React.FC = () => {
                     ))}
                   </div>
                 </div>
-                <label className="block text-sm font-medium mb-1">Departure Date</label>
-                <input
-                  type="date"
-                  value={newReview.departureDate}
-                  onChange={(e) => setNewReview({ ...newReview, departureDate: e.target.value })}
-                  className="w-full p-2 mb-2 border rounded"
-                />
                 <p className="text-xs text-gray-500 mb-4">* Required fields</p>
                 <div className="flex justify-end gap-2">
                   <button

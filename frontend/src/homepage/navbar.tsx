@@ -65,15 +65,21 @@ const Navbar: React.FC<NavbarProps> = () => {
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            <span className={`block w-6 h-0.5 transition-all duration-300 ${
-              scrolled ? 'bg-white' : 'bg-gray-900'
-            } ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}></span>
-            <span className={`block w-6 h-0.5 mt-1.5 transition-all duration-300 ${
-              scrolled ? 'bg-white' : 'bg-gray-900'
-            } ${mobileMenuOpen ? 'opacity-0' : ''}`}></span>
-            <span className={`block w-6 h-0.5 mt-1.5 transition-all duration-300 ${
-              scrolled ? 'bg-white' : 'bg-gray-900'
-            } ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></span>
+            <span
+              className={`block w-6 h-0.5 transition-all duration-300 ${
+                scrolled ? 'bg-white' : 'bg-gray-900'
+              } ${mobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`}
+            ></span>
+            <span
+              className={`block w-6 h-0.5 mt-1.5 transition-all duration-300 ${
+                scrolled ? 'bg-white' : 'bg-gray-900'
+              } ${mobileMenuOpen ? 'opacity-0' : ''}`}
+            ></span>
+            <span
+              className={`block w-6 h-0.5 mt-1.5 transition-all duration-300 ${
+                scrolled ? 'bg-white' : 'bg-gray-900'
+              } ${mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}
+            ></span>
           </button>
 
           {/* Desktop Navigation */}
@@ -83,7 +89,9 @@ const Navbar: React.FC<NavbarProps> = () => {
               <a
                 href="/landlords"
                 className={`flex items-center px-4 py-2 font-medium transition-colors duration-300 hover:scale-105 ${
-                  scrolled ? 'text-white hover:text-gray-200' : 'text-black hover:text-flex-green'
+                  scrolled
+                    ? 'text-white hover:text-gray-200'
+                    : 'text-black hover:text-flex-green'
                 }`}
               >
                 <Building2 size={16} className="mr-2" />
@@ -92,7 +100,9 @@ const Navbar: React.FC<NavbarProps> = () => {
               <a
                 href="/about"
                 className={`flex items-center px-4 py-2 font-medium transition-colors duration-300 hover:scale-105 ${
-                  scrolled ? 'text-white hover:text-gray-200' : 'text-black hover:text-flex-green'
+                  scrolled
+                    ? 'text-white hover:text-gray-200'
+                    : 'text-black hover:text-flex-green'
                 }`}
               >
                 <Info size={16} className="mr-2" />
@@ -101,7 +111,9 @@ const Navbar: React.FC<NavbarProps> = () => {
               <a
                 href="/careers"
                 className={`flex items-center px-4 py-2 font-medium transition-colors duration-300 hover:scale-105 ${
-                  scrolled ? 'text-white hover:text-gray-200' : 'text-black hover:text-flex-green'
+                  scrolled
+                    ? 'text-white hover:text-gray-200'
+                    : 'text-black hover:text-flex-green'
                 }`}
               >
                 <BookOpen size={16} className="mr-2" />
@@ -110,7 +122,9 @@ const Navbar: React.FC<NavbarProps> = () => {
               <a
                 href="/contact"
                 className={`flex items-center px-4 py-2 font-medium transition-colors duration-300 hover:scale-105 ${
-                  scrolled ? 'text-white hover:text-gray-200' : 'text-black hover:text-flex-green'
+                  scrolled
+                    ? 'text-white hover:text-gray-200'
+                    : 'text-black hover:text-flex-green'
                 }`}
               >
                 <Mail size={16} className="mr-2" />
@@ -146,17 +160,23 @@ const Navbar: React.FC<NavbarProps> = () => {
         </div>
 
         {/* Mobile Navigation Menu */}
-        <div className={`lg:hidden absolute left-0 w-full transition-all duration-300 ease-in-out ${
-          mobileMenuOpen ? 'top-16 opacity-100' : 'top-14 opacity-0 pointer-events-none'
-        } ${scrolled ? 'bg-flex-green' : 'bg-white'} border-t ${
-          scrolled ? 'border-green-600' : 'border-gray-200'
-        }`}>
+        <div
+          className={`lg:hidden absolute left-0 w-full transition-all duration-300 ease-in-out ${
+            mobileMenuOpen
+              ? 'top-16 opacity-100'
+              : 'top-14 opacity-0 pointer-events-none'
+          } ${scrolled ? 'bg-flex-green' : 'bg-white'} border-t ${
+            scrolled ? 'border-green-600' : 'border-gray-200'
+          }`}
+        >
           <div className="px-4 py-6 space-y-4">
             {/* Mobile Navigation Links */}
             <a
               href="/landlords"
               className={`flex items-center px-4 py-3 font-medium transition-colors duration-300 rounded-lg ${
-                scrolled ? 'text-white hover:bg-green-600' : 'text-black hover:bg-gray-100'
+                scrolled
+                  ? 'text-white hover:bg-green-600'
+                  : 'text-black hover:bg-gray-100'
               }`}
             >
               <Building2 size={16} className="mr-3" />
@@ -165,7 +185,9 @@ const Navbar: React.FC<NavbarProps> = () => {
             <a
               href="/about"
               className={`flex items-center px-4 py-3 font-medium transition-colors duration-300 rounded-lg ${
-                scrolled ? 'text-white hover:bg-green-600' : 'text-black hover:bg-gray-100'
+                scrolled
+                  ? 'text-white hover:bg-green-600'
+                  : 'text-black hover:bg-gray-100'
               }`}
             >
               <Info size={16} className="mr-3" />
@@ -174,7 +196,9 @@ const Navbar: React.FC<NavbarProps> = () => {
             <a
               href="/careers"
               className={`flex items-center px-4 py-3 font-medium transition-colors duration-300 rounded-lg ${
-                scrolled ? 'text-white hover:bg-green-600' : 'text-black hover:bg-gray-100'
+                scrolled
+                  ? 'text-white hover:bg-green-600'
+                  : 'text-black hover:bg-gray-100'
               }`}
             >
               <BookOpen size={16} className="mr-3" />
@@ -183,13 +207,15 @@ const Navbar: React.FC<NavbarProps> = () => {
             <a
               href="/contact"
               className={`flex items-center px-4 py-3 font-medium transition-colors duration-300 rounded-lg ${
-                scrolled ? 'text-white hover:bg-green-600' : 'text-black hover:bg-gray-100'
+                scrolled
+                  ? 'text-white hover:bg-green-600'
+                  : 'text-black hover:bg-gray-100'
               }`}
             >
               <Mail size={16} className="mr-3" />
               Contact
             </a>
-            
+
             {/* Mobile Dropdowns */}
             <div className="pt-4 border-t border-gray-300 space-y-3">
               <Dropdown

@@ -47,12 +47,12 @@ const Dropdown: React.FC<DropdownProps> = ({
 
     // Calculate horizontal position - stick to the left edge of the button
     let leftPosition = rect.left;
-    
+
     // If dropdown would go off-screen to the right, align it to the right edge of button
     if (leftPosition + dropdownWidth > viewportWidth) {
       leftPosition = rect.right - dropdownWidth;
     }
-    
+
     // Ensure dropdown doesn't go off-screen to the left
     if (leftPosition < 0) {
       leftPosition = 8; // Small margin from viewport edge
@@ -209,8 +209,8 @@ const Dropdown: React.FC<DropdownProps> = ({
                   className={`w-full text-left px-4 py-3 border-none outline-none cursor-pointer whitespace-nowrap transition-colors text-base font-medium min-h-[48px] ${
                     isFirst ? 'rounded-t-md' : ''
                   } ${isLast ? 'rounded-b-md' : ''} ${
-                    option.value === value 
-                      ? 'bg-flex-green text-white' 
+                    option.value === value
+                      ? 'bg-flex-green text-white'
                       : 'bg-white text-gray-800 hover:bg-flex-green/10'
                   }`}
                 >
